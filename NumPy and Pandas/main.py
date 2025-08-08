@@ -138,33 +138,34 @@ def chapter29():
 def chapter30():
     return render_template('chapters/part5-practice-projects/chapter30-capstone.html')
 
-@app.route('part6/NumPy-Quiz')
+@app.route('/part6/NumPy-Quiz')
 def numpyquiz():
     return render_template('quizzes/numpy_quizzes.html')
 
-@app.route('part6/Pandas-Quiz')
+@app.route('/part6/Pandas-Quiz')
 def pandasquiz():
     return render_template('quizzes/pandas_quizzes.html')
 
-@app.route('part6/Final-Exam')
+@app.route('/part6/Final-Exam')
 def finalexam():
     return render_template('quizzes/final_exam.html')
 
-@app.route('part7/project1')
+@app.route('/part7/project1')
 def miniproject1():
     return render_template('projects/mini/project1-basic.html')
 
-@app.route('part7/projec2')
+@app.route('/part7/projec2')
 def miniproject2():
     return render_template('projects/mini/project2-cleaning.html')
 
-@app.route('part7/projec3')
+@app.route('/part7/projec3')
 def miniproject3():
     return render_template('projects/mini/project3-viz.html')
 
-@app.route('part7/Capsone-Project')
+@app.route('/part7/Capsone-Project')
 def Capstone_Projec():
     return render_template('projects/capsone/capsone-project.html')
 
 if __name__ == '__main__':
+
     app.run(debug=True)

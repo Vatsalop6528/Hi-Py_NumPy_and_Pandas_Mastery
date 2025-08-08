@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 26: Data Science Projects with Pandas</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+
+<div class="container">
+      <h1>Chapter 26: Data Science Projects with Pandas</h1>
+    </div>
+
+<main class="chapter-content container">
+
+
+  <div class="note">
+    <h2>🧠 Concept: End-to-End DS Projects</h2>
+    <p>In this chapter, you'll build real-world data science projects using Pandas. You'll learn how to load, clean, manipulate, analyze, and visualize data in a structured, step-by-step format.</p>
+  </div>
+
+  <div class="note">
+    <h2>📘 Diagram: Typical DS Workflow</h2>
+    <p><img src="../static/assets/img/placeholder-diagram.png" alt="Data Science Workflow Diagram" /></p>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercise 1: Load and Inspect Dataset</h2>
+    <pre><code>import pandas as pd
+
+df = pd.read_csv("data/air_quality.csv")
+print(df.head())</code></pre>
+  </div>
+
+  <div class="test">
+    <h2>✅ Test Your Understanding</h2>
+    <p>What method shows summary statistics of numeric columns?</p>
+    <ul>
+      <li>A) <code>df.info()</code></li>
+      <li>B) <code>df.describe()</code></li>
+      <li>C) <code>df.mean()</code></li>
+    </ul>
+    <p><strong>Correct:</strong> B</p>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercise 2: Data Cleaning</h2>
+    <pre><code># Remove rows with missing values
+df_clean = df.dropna()
+
+# Convert date column to datetime
+df_clean["date"] = pd.to_datetime(df_clean["date"])</code></pre>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercise 3: Feature Engineering</h2>
+    <pre><code># Add a new column for day of the week
+df_clean["day"] = df_clean["date"].dt.day_name()</code></pre>
+  </div>
+
+  <!-- Add more exercises up to 10–20 as needed -->
+
+  <div class="challenge">
+    <h2>💡 Challenge 1: Clean Retail Sales Data</h2>
+    <p>Load <code>sales_data.csv</code>, remove nulls, convert dates, and extract month and year columns.</p>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenge 2 (Hard): Customer Segmentation</h2>
+    <p>Group e-commerce data by customer and calculate purchase frequency, average order value, and recency.</p>
+  </div>
+
+  <div class="note">
+    <h2>🧠 Concept: Building the Data Pipeline</h2>
+    <p>Think of your workflow as a repeatable pipeline: <strong>load → clean → feature engineer → analyze → visualize</strong>.</p>
+  </div>
+
+  <div class="note">
+    <h2>📘 Diagram: Pipeline Structure</h2>
+    <p><img src="/static/assets/images/placeholder-pipeline.png" alt="Pipeline Diagram" /></p>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenge 3: Weather Pattern Analysis</h2>
+    <p>Analyze 10 years of temperature and rainfall data to identify weather anomalies and patterns.</p>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercise 10: GroupBy Monthly Averages</h2>
+    <pre><code>monthly_avg = df_clean.groupby(df_clean["date"].dt.month)["PM2.5"].mean()
+print(monthly_avg)</code></pre>
+  </div>
+
+  <div class="note">
+    <h2>🧭 Mini Project: Air Quality Insights</h2>
+    <p>You're working for an environmental agency. Use <code>air_quality.csv</code> and generate insights:</p>
+    <ul>
+      <li>📥 Load & clean the data</li>
+      <li>🧪 Extract time-based features</li>
+      <li>📊 Group data by city and calculate average pollutants</li>
+      <li>📈 Visualize trends (use <code>matplotlib</code>)</li>
+      <li>📄 Export final report</li>
+    </ul>
+  </div>
+
+  <div class="code">
+    <h2>💡 Step 1: Load + Clean</h2>
+    <pre><code>df = pd.read_csv("data/air_quality.csv")
+df = df.dropna()
+df["date"] = pd.to_datetime(df["date"])</code></pre>
+  </div>
+
+  <div class="code">
+    <h2>💡 Step 2: City-Wise Grouping</h2>
+    <pre><code>avg_pollution = df.groupby("city")[["PM2.5", "NO2", "SO2"]].mean()</code></pre>
+  </div>
+
+  <div class="code">
+    <h2>💡 Step 3: Visualize</h2>
+    <pre><code>import matplotlib.pyplot as plt
+
+avg_pollution.plot(kind="bar")
+plt.title("Average Pollutants by City")
+plt.ylabel("Concentration")
+plt.show()</code></pre>
+  </div>
+
+  <div class="note">
+    <h2>✅ Summary</h2>
+    <p>You're now equipped to build full data pipelines using Pandas. Practice with real datasets and try automating insights!</p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

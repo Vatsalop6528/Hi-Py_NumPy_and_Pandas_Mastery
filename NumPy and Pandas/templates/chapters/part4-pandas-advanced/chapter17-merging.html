@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 17: Merging, Joining, and Concatenation in Pandas</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+
+<div class="container">
+      <h1>Chapter 17: Merging, Joining, and Concatenation in Pandas</h1>
+    </div>
+
+<main class="chapter-content container">
+
+
+
+  <div class="note">
+    <p><strong>🧠 Concept:</strong> Pandas provides powerful tools for combining multiple DataFrames using:</p>
+    <ul>
+      <li><strong><code>pd.merge()</code></strong>: Combines data like SQL joins (inner, outer, left, right).</li>
+      <li><strong><code>df.join()</code></strong>: Convenient for joining DataFrames using index or keys.</li>
+      <li><strong><code>pd.concat()</code></strong>: Stacks DataFrames vertically or horizontally.</li>
+      <li><strong><code>combine_first()</code></strong>: Fills missing values with another DataFrame.</li>
+    </ul>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercises</h2>
+    <pre><code>
+import pandas as pd
+
+# 1. Sample DataFrames
+df1 = pd.DataFrame({
+    'ID': [1, 2, 3],
+    'Name': ['Alice', 'Bob', 'Charlie']
+})
+
+df2 = pd.DataFrame({
+    'ID': [2, 3, 4],
+    'Score': [85, 90, 75]
+})
+
+# 2. Inner Join
+print(pd.merge(df1, df2, on='ID', how='inner'))
+
+# 3. Left Join
+print(pd.merge(df1, df2, on='ID', how='left'))
+
+# 4. Right Join
+print(pd.merge(df1, df2, on='ID', how='right'))
+
+# 5. Outer Join
+print(pd.merge(df1, df2, on='ID', how='outer'))
+
+# 6. Merge on multiple keys
+df3 = pd.DataFrame({
+    'ID': [1, 2, 3],
+    'Year': [2020, 2021, 2020],
+    'Salary': [50000, 60000, 70000]
+})
+
+df4 = pd.DataFrame({
+    'ID': [1, 2, 3],
+    'Year': [2020, 2021, 2021],
+    'Bonus': [3000, 3500, 4000]
+})
+
+print(pd.merge(df3, df4, on=['ID', 'Year'], how='outer'))
+
+# 7. Concatenation - Vertical
+df_a = pd.DataFrame({'A': ['A0', 'A1'], 'B': ['B0', 'B1']})
+df_b = pd.DataFrame({'A': ['A2', 'A3'], 'B': ['B2', 'B3']})
+print(pd.concat([df_a, df_b]))
+
+# 8. Concatenation - Horizontal
+print(pd.concat([df_a, df_b], axis=1))
+
+# 9. Join on Index
+df5 = pd.DataFrame({'value': [100, 200]}, index=['x', 'y'])
+df6 = pd.DataFrame({'bonus': [10, 20]}, index=['x', 'y'])
+print(df5.join(df6))
+
+# 10. Using join() with keys
+print(df5.join(df6, how='outer'))
+
+# 11. Combine first
+df7 = pd.DataFrame({'A': [None, 2], 'B': [3, None]})
+df8 = pd.DataFrame({'A': [1, None], 'B': [None, 4]})
+print(df7.combine_first(df8))
+
+# 12. Detect overlapping columns before merge
+if not df1.columns.isin(df2.columns).any():
+    merged = pd.merge(df1, df2, on='ID')
+else:
+    print("Overlapping columns exist!")
+
+# 13. Add suffixes to overlapping columns
+print(pd.merge(df1, df2, on='ID', how='outer', suffixes=('_left', '_right')))
+    </code></pre>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenges</h2>
+    <ul>
+      <li><strong>Easy:</strong> Merge student names and their test scores using a common ID.</li>
+      <li><strong>Medium:</strong> Concatenate employee data from two different years and sort by name.</li>
+      <li><strong>Hard:</strong> Merge three dataframes with overlapping columns and apply suffixes correctly to avoid conflicts.</li>
+    </ul>
+  </div>
+
+  <div class="test">
+    <h2>🧭 Mini Project: Customer Purchase Data Merge</h2>
+    <p><strong>Objective:</strong> Combine customer profile and order history data using different join techniques.</p>
+
+    <ol>
+      <li>Create two DataFrames: one with customer info, and one with their purchases.</li>
+      <li>Use <code>merge()</code> to connect both on <code>CustomerID</code>.</li>
+      <li>Explore <code>inner</code>, <code>outer</code>, <code>left</code>, and <code>right</code> joins.</li>
+      <li>Use <code>concat()</code> to add extra customer records.</li>
+      <li>Use <code>combine_first()</code> to fill missing values from another DataFrame.</li>
+    </ol>
+
+    <pre><code>
+import pandas as pd
+
+# Step 1: Customer Info
+customers = pd.DataFrame({
+    'CustomerID': [101, 102, 103],
+    'Name': ['Alice', 'Bob', 'Charlie'],
+    'City': ['New York', 'Paris', 'London']
+})
+
+# Step 2: Purchases
+purchases = pd.DataFrame({
+    'CustomerID': [102, 103, 104],
+    'Product': ['Book', 'Pen', 'Notebook'],
+    'Amount': [20, 5, 15]
+})
+
+# Step 3: Inner Join
+inner = pd.merge(customers, purchases, on='CustomerID', how='inner')
+print("Inner Join:\n", inner)
+
+# Step 4: Outer Join
+outer = pd.merge(customers, purchases, on='CustomerID', how='outer')
+print("Outer Join:\n", outer)
+
+# Step 5: Add new customer data via concat
+new_customers = pd.DataFrame({
+    'CustomerID': [105],
+    'Name': ['David'],
+    'City': ['Berlin']
+})
+all_customers = pd.concat([customers, new_customers], ignore_index=True)
+print("All Customers:\n", all_customers)
+
+# Step 6: Combine with fallback info
+customers_missing = pd.DataFrame({
+    'CustomerID': [101, 102, 103],
+    'Phone': [None, '12345', None]
+})
+
+fallback_phones = pd.DataFrame({
+    'CustomerID': [101, 102, 103],
+    'Phone': ['99999', None, '88888']
+})
+print(customers_missing.set_index('CustomerID')
+      .combine_first(fallback_phones.set_index('CustomerID')))
+    </code></pre>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

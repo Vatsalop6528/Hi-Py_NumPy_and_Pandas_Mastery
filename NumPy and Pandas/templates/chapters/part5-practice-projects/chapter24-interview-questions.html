@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>📘 Chapter 24: Interview Questions</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+
+<div class="container">
+      <h1>📘 Chapter 24: Interview Questions</h1>
+    </div>
+
+
+<main class="chapter-content container">
+
+
+
+  <div class="note">
+    <h2>🧠 Concept Overview</h2>
+    <p>
+      Interviews for data analyst, data scientist, and ML engineer roles often include questions about NumPy and Pandas. This chapter helps you prepare for both conceptual and coding interviews by practicing real questions asked by top companies.
+    </p>
+    <p>
+      Focus Areas:
+    </p>
+    <ul>
+      <li>Array operations & slicing (NumPy)</li>
+      <li>DataFrame manipulations (Pandas)</li>
+      <li>Performance and memory optimization</li>
+      <li>Data wrangling and cleaning</li>
+      <li>Exploratory analysis logic</li>
+    </ul>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercises</h2>
+    <pre><code>
+# 1. Reverse a 1D NumPy array
+arr = np.array([1, 2, 3, 4])
+reversed_arr = arr[::-1]
+
+# 2. Convert a 1D array to 2D
+np.reshape(arr, (2, 2))
+
+# 3. Replace NaN values in a column with the median
+df['age'].fillna(df['age'].median(), inplace=True)
+
+# 4. Get rows where column 'sales' is above average
+df[df['sales'] > df['sales'].mean()]
+
+# 5. Find duplicated rows
+df[df.duplicated()]
+
+# 6. Count missing values per column
+df.isnull().sum()
+
+# 7. Merge two DataFrames on 'id'
+pd.merge(df1, df2, on='id', how='inner')
+
+# 8. Pivot table for category-wise sales
+df.pivot_table(values='sales', index='category', aggfunc='sum')
+
+# 9. Remove outliers using IQR
+Q1 = df['amount'].quantile(0.25)
+Q3 = df['amount'].quantile(0.75)
+IQR = Q3 - Q1
+df = df[(df['amount'] >= Q1 - 1.5*IQR) & (df['amount'] <= Q3 + 1.5*IQR)]
+
+# 10. Apply a function to normalize scores
+df['score'] = df['score'].apply(lambda x: x / 100)
+    </code></pre>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Interview Challenges (Easy → Hard)</h2>
+    <ul>
+      <li><strong>🟢 Easy:</strong> What's the difference between a Series and a DataFrame?</li>
+      <li><strong>🟡 Medium:</strong> How would you merge two DataFrames and keep all rows from the left one?</li>
+      <li><strong>🟠 Hard:</strong> Write a function to detect outliers using z-score and remove them from a DataFrame.</li>
+      <li><strong>🔴 Expert:</strong> Optimize a DataFrame with large memory usage without changing any values.</li>
+    </ul>
+  </div>
+
+
+
+  <div class="test">
+    <h2>🧭 Mini Project: Interview Simulation</h2>
+    <p><strong>Scenario:</strong> You are given a real-world employee dataset and asked 5 rapid-fire questions to test your Pandas skills.</p>
+
+    <ol>
+      <li>Load <code>employee_data.csv</code></li>
+      <li>Find employees with the top 10 salaries</li>
+      <li>Calculate average salary by department</li>
+      <li>Identify departments with over 50 employees</li>
+      <li>Find the percentage of missing values in each column</li>
+      <li>Create a summary report of all numeric columns</li>
+    </ol>
+
+    <pre><code>
+# 1. Load dataset
+df = pd.read_csv('employee_data.csv')
+
+# 2. Top 10 salaries
+df.nlargest(10, 'salary')
+
+# 3. Average salary by department
+df.groupby('department')['salary'].mean()
+
+# 4. Departments with >50 employees
+df['department'].value_counts()[df['department'].value_counts() > 50]
+
+# 5. Missing value %
+(df.isnull().sum() / len(df)) * 100
+
+# 6. Summary report
+df.describe()
+    </code></pre>
+
+    <p>🎯 <strong>Deliverable:</strong> Write your answers as comments or markdown in a notebook. Time yourself: 20 minutes!</p>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

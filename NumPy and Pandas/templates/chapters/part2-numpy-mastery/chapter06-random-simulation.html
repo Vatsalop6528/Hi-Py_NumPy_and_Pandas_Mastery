@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 6: Random Numbers & Simulations with NumPy</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+
+<div class="container">
+      <h1>Chapter 6: Random Numbers & Simulations with NumPy</h1>
+    </div>
+
+
+<main class="chapter-content container">
+
+
+  <!-- 🧠 Concept Explanations -->
+  <div class="note">
+    <h2>🧠 Concept: Pseudo-Random Number Generators (PRNG)</h2>
+    <p>NumPy uses a pseudo-random number generator. Use <code>np.random.seed()</code> to make results reproducible. All random functions live under <code>np.random</code> or <code>np.random.default_rng()</code>.</p>
+  </div>
+
+  <div class="note">
+    <h2>🧠 Concept: Generating Random Numbers</h2>
+    <p>Use functions like <code>rand()</code>, <code>randn()</code>, <code>randint()</code>, and <code>choice()</code> to generate uniform, normal, integer, and custom sample values.</p>
+  </div>
+
+  <div class="note">
+    <h2>🧠 Concept: Simulating Distributions</h2>
+    <p>NumPy supports many statistical distributions such as binomial, Poisson, exponential, and normal via <code>np.random</code> or <code>Generator</code> API.</p>
+  </div>
+
+  <div class="note">
+    <h2>🧠 Concept: Monte Carlo Simulations</h2>
+    <p>Monte Carlo methods use repeated random sampling to estimate results, e.g., approximating π or modeling risk in finance.</p>
+  </div>
+
+  <div class="note">
+    <h2>🧠 Concept: Reproducibility</h2>
+    <p>Using <code>np.random.seed()</code> ensures that the same random numbers are generated across multiple runs — essential for experiments and debugging.</p>
+  </div>
+
+  <!-- 📘 Diagram Placeholder -->
+  <div class="note">
+    <h2>📘 Diagram</h2>
+    <p><em>[Insert Diagram: Random number flowchart, distribution shapes, Monte Carlo process]</em></p>
+  </div>
+
+  <!-- 🧪 Code Exercises -->
+  <div class="code">
+    <h2>🧪 Practice Exercises</h2>
+    <pre><code>
+import numpy as np
+
+# 1. Set seed
+np.random.seed(42)
+
+# 2. Generate 5 random floats between 0 and 1
+print(np.random.rand(5))
+
+# 3. Generate 5 random integers between 10 and 50
+print(np.random.randint(10, 50, size=5))
+
+# 4. Random choice from a list
+colors = ['red', 'blue', 'green']
+print(np.random.choice(colors, size=3))
+
+# 5. Random normal distribution
+print(np.random.normal(loc=0, scale=1, size=10))
+
+# 6. Simulate coin toss (0 = tails, 1 = heads)
+print(np.random.randint(0, 2, size=10))
+
+# 7. Simulate 1000 dice rolls
+print(np.random.randint(1, 7, size=1000))
+
+# 8. Estimate π using Monte Carlo
+N = 100000
+x = np.random.rand(N)
+y = np.random.rand(N)
+inside_circle = (x**2 + y**2) <= 1
+pi_approx = 4 * np.sum(inside_circle) / N
+print("Estimated π:", pi_approx)
+
+# 9. Simulate 100 students' exam scores (normal dist)
+scores = np.random.normal(loc=70, scale=10, size=100)
+print(scores[:5])
+
+# 10. Shuffle a deck of cards
+deck = np.arange(1, 53)
+np.random.shuffle(deck)
+print(deck[:10])
+    </code></pre>
+  </div>
+
+  <!-- 💡 Challenges -->
+  <div class="challenge">
+    <h2>💡 Challenge: Easy</h2>
+    <p>Simulate 10 coin tosses and count the number of heads (1s).</p>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenge: Medium</h2>
+    <p>Generate a synthetic dataset of 1000 people’s heights (normally distributed, mean=165, std=10) and plot a histogram.</p>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenge: Hard</h2>
+    <p>Run a Monte Carlo simulation to estimate the probability of getting at least one 6 in five rolls of a die. Repeat 10,000 times.</p>
+  </div>
+
+  <!-- 🧭 Mini Project -->
+  <div class="test">
+    <h2>🧭 Mini Project: Dice Game Simulator</h2>
+    <p><strong>Goal:</strong> Simulate a simple dice game where two players roll a die 10 times. Track wins and declare a winner.</p>
+
+    <p><strong>Steps:</strong></p>
+    <ol>
+      <li>Use <code>np.random.randint()</code> to simulate 10 rolls for each player.</li>
+      <li>Compare outcomes roll by roll.</li>
+      <li>Score 1 point per win per round. Ties = 0 points.</li>
+      <li>Print final scores and declare the winner.</li>
+    </ol>
+
+    <pre><code>
+# Dice Game Simulator
+player1 = np.random.randint(1, 7, size=10)
+player2 = np.random.randint(1, 7, size=10)
+
+score1 = np.sum(player1 > player2)
+score2 = np.sum(player2 > player1)
+
+print("Player 1 rolls:", player1)
+print("Player 2 rolls:", player2)
+print("Score - Player 1:", score1, "| Player 2:", score2)
+
+if score1 > score2:
+    print("🎉 Player 1 wins!")
+elif score2 > score1:
+    print("🎉 Player 2 wins!")
+else:
+    print("🤝 It's a tie!")
+    </code></pre>
+
+    <p><strong>Bonus:</strong> Run 1000 games and track win rates using loops or <code>np.mean()</code>.</p>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

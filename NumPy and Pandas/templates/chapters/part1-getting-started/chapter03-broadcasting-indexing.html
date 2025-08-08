@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Chapter 3: Broadcasting and Indexing in NumPy</title>
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style/main.css" />
+
+</head>
+
+
+<body>
+
+{% include 'components/header.html' %}
+
+<!-- <div id="chapter3">
+  <h2>Chapter 3: Broadcasting and Indexing in NumPy</h2> -->
+<div class="container">
+      <h1>Chapter 3: Broadcasting and Indexing in NumPy</h1>
+    </div>
+  <!-- 🧠 Concept Explanations -->
+
+<main class="chapter-content container">
+
+  <div class="note">
+    <h2>🧠 Concept: Broadcasting</h2>
+    <p>Broadcasting in NumPy describes how arrays with different shapes are treated during arithmetic operations. Smaller arrays are "broadcast" to match larger ones, enabling vectorized operations without explicit loops.</p>
+    <p>Rules govern broadcasting: dimensions are compared from the end, and dimensions must either match or be 1.</p>
+  </div>
+
+  <div class="note">
+    <h2>🧠 Concept: Indexing</h2>
+    <p>Indexing lets you extract specific elements or slices from arrays. NumPy supports:</p>
+    <ul>
+      <li>Basic slicing</li>
+      <li>Integer indexing</li>
+      <li>Boolean masking</li>
+      <li>Fancy indexing</li>
+    </ul>
+  </div>
+
+  <!-- 📘 Diagram Placeholder -->
+  <div class="note">
+    <h2>📘 Diagram</h2>
+    <p><em>[Insert Diagram: Broadcasting flow across dimensions]</em></p>
+  </div>
+
+  <!-- 🧪 Code Exercises -->
+  <div class="code">
+    <h2>🧪 Practice Exercises</h2>
+    <pre><code># 1. Add a scalar to a 1D array
+arr = np.array([1, 2, 3])
+print(arr + 5)
+
+# 2. Add a 1D array to a 2D array using broadcasting
+matrix = np.array([[1, 2, 3], [4, 5, 6]])
+row = np.array([10, 20, 30])
+print(matrix + row)
+
+# 3. Create two arrays of shape (3, 1) and (1, 4) and broadcast
+A = np.arange(3).reshape((3, 1))
+B = np.arange(4).reshape((1, 4))
+print(A + B)
+
+# 4. Extract diagonal elements using fancy indexing
+mat = np.array([[1,2,3],[4,5,6],[7,8,9]])
+print(mat[[0,1,2], [0,1,2]])  # [1,5,9]
+
+# 5. Boolean indexing
+arr = np.array([1, 2, 3, 4, 5])
+print(arr[arr > 3])
+
+# ... Add 10+ more similar exercises
+    </code></pre>
+  </div>
+
+  <!-- 💡 Challenges -->
+  <div class="challenge">
+    <h2>💡 Challenge: Easy</h2>
+    <p>Broadcast a (5,) vector over a (3, 5) matrix and compute column-wise addition.</p>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenge: Medium</h2>
+    <p>Use boolean indexing to extract values > average from a random matrix.</p>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenge: Hard</h2>
+    <p>Given a 3D array, write a function that extracts a sub-cube using dynamic slicing and performs broadcasting with a 2D mask.</p>
+  </div>
+
+  <!-- 🧭 Mini Project -->
+  <div class="test">
+    <h2>🧭 Mini Project: Grade Normalizer</h2>
+    <p><strong>Problem:</strong> You have a 2D array of student marks in different subjects. Normalize each student's scores so that their highest mark becomes 100, and all other marks are scaled accordingly.</p>
+
+    <p><strong>Step-by-step:</strong></p>
+    <ol>
+      <li>Create a 2D array of shape (10, 5) with random integers from 40 to 100.</li>
+      <li>For each row (student), get the max score using axis=1 and reshape for broadcasting.</li>
+      <li>Divide all scores by max and multiply by 100.</li>
+      <li>Round the result and print the normalized grade sheet.</li>
+    </ol>
+
+    <pre><code>
+import numpy as np
+
+grades = np.random.randint(40, 100, size=(10, 5))
+max_scores = np.max(grades, axis=1).reshape(-1, 1)
+normalized = (grades / max_scores) * 100
+print(np.round(normalized, 1))
+    </code></pre>
+  </div>
+</div>
+</main>
+
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

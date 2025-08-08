@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 28: Pandas Meets SQL – Querying DataFrames Like Databases</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+<div class="container">
+      <h1>Chapter 28: Pandas Meets SQL – Querying DataFrames Like Databases</h1>
+    </div>
+
+<main class="chapter-content container">
+
+
+
+  <div class="note">
+    <h2>🧠 Concept: Why SQL with Pandas?</h2>
+    <p>SQL is the language of data, and Pandas can replicate many SQL operations using Pythonic syntax. From <code>SELECT</code> to <code>JOIN</code> and <code>GROUP BY</code>, you can treat a DataFrame like a relational table.</p>
+  </div>
+
+
+
+  <!-- Basic Selection -->
+  <div class="code">
+    <h2>🧪 Code Exercise 1: SELECT Equivalent</h2>
+    <pre><code># SQL: SELECT name, age FROM users;
+df[["name", "age"]]</code></pre>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercise 2: WHERE Clause</h2>
+    <pre><code># SQL: SELECT * FROM users WHERE age > 30;
+df[df["age"] > 30]</code></pre>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercise 3: ORDER BY</h2>
+    <pre><code># SQL: SELECT * FROM users ORDER BY score DESC;
+df.sort_values(by="score", ascending=False)</code></pre>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercise 4: LIMIT / HEAD</h2>
+    <pre><code># SQL: SELECT * FROM users LIMIT 5;
+df.head(5)</code></pre>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercise 5: LIKE Filtering</h2>
+    <pre><code># SQL: SELECT * FROM users WHERE name LIKE 'A%';
+df[df["name"].str.startswith("A")]</code></pre>
+  </div>
+
+  <div class="test">
+    <h2>✅ Test Your SQL-to-Pandas Translation</h2>
+    <p>What is the Pandas equivalent of <code>SELECT COUNT(*) FROM sales;</code>?</p>
+    <ul>
+      <li>A) <code>sales.count()</code></li>
+      <li>B) <code>sales.shape[0]</code></li>
+      <li>C) <code>len(sales)</code></li>
+    </ul>
+    <p><strong>Correct:</strong> B or C</p>
+  </div>
+
+  <!-- Aggregations -->
+  <div class="code">
+    <h2>🧪 Code Exercise 6: GROUP BY + Aggregate</h2>
+    <pre><code># SQL: SELECT dept, AVG(salary) FROM employees GROUP BY dept;
+df.groupby("dept")["salary"].mean()</code></pre>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercise 7: Multi-Aggregations</h2>
+    <pre><code>df.groupby("category").agg({
+  "price": ["mean", "max", "min"],
+  "quantity": "sum"
+})</code></pre>
+  </div>
+
+  <!-- Joins -->
+  <div class="note">
+    <h2>🧠 Concept: SQL Joins in Pandas</h2>
+    <p>Pandas supports all SQL join types via <code>merge()</code>. You can perform inner, outer, left, and right joins.</p>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercise 8: INNER JOIN</h2>
+    <pre><code># SQL: SELECT * FROM orders INNER JOIN customers ON orders.cust_id = customers.id;
+pd.merge(orders, customers, left_on="cust_id", right_on="id", how="inner")</code></pre>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercise 9: LEFT JOIN</h2>
+    <pre><code>pd.merge(orders, customers, on="cust_id", how="left")</code></pre>
+  </div>
+
+  <!-- Subquery / Filtering -->
+  <div class="code">
+    <h2>🧪 Code Exercise 10: IN / Subquery Logic</h2>
+    <pre><code># SQL: SELECT * FROM orders WHERE cust_id IN (SELECT id FROM customers WHERE region = 'North');
+north_ids = customers[customers["region"] == "North"]["id"]
+orders[orders["cust_id"].isin(north_ids)]</code></pre>
+  </div>
+
+  <!-- Challenges -->
+  <div class="challenge">
+    <h2>💡 Challenge 1: Query Top Customers</h2>
+    <p>Find customers with total purchases &gt; 10,000. Return their name, region, and total spend sorted in descending order.</p>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenge 2: Monthly Sales Summary</h2>
+    <p>Group sales data by month and category. Show total revenue, average quantity sold, and highest single-day sale.</p>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenge 3 (Hard): Complex Join with Conditions</h2>
+    <p>From three tables (orders, customers, products), return all orders from premium customers where product rating &gt; 4.5 and purchase date is in 2024.</p>
+  </div>
+
+  <!-- Mini Project -->
+  <div class="note">
+    <h2>🧭 Mini Project: SQL → Pandas Conversion Challenge</h2>
+    <p>You are tasked to replicate an analytics dashboard that was originally built in SQL — but using Pandas only.</p>
+    <ul>
+      <li>🗂️ Data: orders.csv, customers.csv, products.csv</li>
+      <li>🎯 Goals:
+        <ul>
+          <li>Total sales per region</li>
+          <li>Top 5 products per category</li>
+          <li>Customer churn rate</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="code">
+    <h2>💡 Step 1: Load and Join Data</h2>
+    <pre><code>orders = pd.read_csv("data/orders.csv")
+customers = pd.read_csv("data/customers.csv")
+products = pd.read_csv("data/products.csv")
+
+full = orders.merge(customers, on="cust_id").merge(products, on="product_id")</code></pre>
+  </div>
+
+  <div class="code">
+    <h2>💡 Step 2: Region-wise Sales</h2>
+    <pre><code>region_sales = full.groupby("region")["amount"].sum().reset_index()</code></pre>
+  </div>
+
+  <div class="code">
+    <h2>💡 Step 3: Top Products by Category</h2>
+    <pre><code>top_products = (
+  full.groupby(["category", "product_name"])["amount"]
+  .sum()
+  .sort_values(ascending=False)
+  .groupby(level=0)
+  .head(5)
+  .reset_index()
+)</code></pre>
+  </div>
+
+  <div class="code">
+    <h2>💡 Step 4: Estimate Churn</h2>
+    <pre><code># Define churn: customers with no orders in the last 90 days
+latest_date = pd.to_datetime(full["order_date"]).max()
+cutoff = latest_date - pd.Timedelta(days=90)
+
+recent_orders = full[pd.to_datetime(full["order_date"]) > cutoff]
+active_ids = recent_orders["cust_id"].unique()
+
+churned = ~full["cust_id"].isin(active_ids)
+churn_rate = churned.sum() / full["cust_id"].nunique()</code></pre>
+  </div>
+
+  <div class="note">
+    <h2>✅ Summary</h2>
+    <p>This chapter bridges the SQL world and the Pandas world. With just a few tweaks, you can express almost any SQL query using Pandas' powerful DataFrame operations.</p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

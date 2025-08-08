@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 19: Data Visualization with Pandas</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+<div class="container">
+      <h1>Chapter 19: Data Visualization with Pandas</h1>
+    </div>
+
+<main class="chapter-content container">
+
+
+
+  <div class="note">
+    <h2>🧠 Concept Overview</h2>
+    <p>Pandas provides built-in plotting capabilities using <code>matplotlib</code> under the hood. These visualizations are useful for quick data exploration:</p>
+    <ul>
+      <li><strong><code>plot()</code></strong> — General-purpose plotting function</li>
+      <li><strong><code>hist()</code></strong> — Histogram to show distributions</li>
+      <li><strong><code>box()</code></strong> — Boxplot to display spread and outliers</li>
+      <li><strong><code>bar()</code> / <code>barh()</code></strong> — Bar/Horizontal bar charts</li>
+      <li><strong><code>pie()</code></strong> — Pie charts for proportions</li>
+      <li><strong><code>area()</code></strong> — Area plots for stacked values</li>
+      <li><strong><code>scatter()</code></strong> — Scatter plot for 2D relationships</li>
+      <li><strong>Styling:</strong> Use <code>color</code>, <code>grid</code>, <code>figsize</code>, <code>subplots</code>, etc.</li>
+    </ul>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercises</h2>
+    <pre><code>
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# 1. Line plot
+df = pd.Series([10, 20, 15, 30, 45])
+df.plot(title="Simple Line Plot")
+plt.show()
+
+# 2. Plot from DataFrame
+data = {
+    'Math': [85, 90, 78, 92],
+    'Science': [88, 85, 82, 94]
+}
+df2 = pd.DataFrame(data, index=['A', 'B', 'C', 'D'])
+df2.plot(kind='line')
+plt.show()
+
+# 3. Bar chart
+df2.plot(kind='bar')
+plt.show()
+
+# 4. Horizontal bar
+df2.plot(kind='barh')
+plt.show()
+
+# 5. Histogram
+df2['Math'].plot(kind='hist', bins=5)
+plt.show()
+
+# 6. Boxplot
+df2.plot(kind='box')
+plt.show()
+
+# 7. Area plot
+df2.plot(kind='area', alpha=0.5)
+plt.show()
+
+# 8. Pie chart
+df2.loc['A'].plot(kind='pie', autopct='%1.1f%%')
+plt.ylabel('')
+plt.show()
+
+# 9. Scatter plot
+df3 = pd.DataFrame({
+    'Height': [150, 160, 170, 180],
+    'Weight': [50, 60, 65, 80]
+})
+df3.plot(kind='scatter', x='Height', y='Weight')
+plt.show()
+
+# 10. Subplots
+df2.plot(subplots=True, layout=(2,1), figsize=(6, 6))
+plt.show()
+
+# 11. Styling: color and grid
+df2.plot(kind='line', color=['#FF5733', '#33A1FF'], grid=True)
+plt.show()
+
+# 12. Multiple charts in one figure
+fig, axs = plt.subplots(1, 2, figsize=(10, 4))
+df2['Math'].plot(kind='bar', ax=axs[0], title='Math')
+df2['Science'].plot(kind='bar', ax=axs[1], title='Science')
+plt.tight_layout()
+plt.show()
+
+# 13. Save plot
+df2.plot(kind='line')
+plt.savefig('plot_output.png')
+    </code></pre>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenges</h2>
+    <ul>
+      <li><strong>Easy:</strong> Plot a histogram of student scores in one subject.</li>
+      <li><strong>Medium:</strong> Create a pie chart showing total sales by product category.</li>
+      <li><strong>Hard:</strong> Build a subplot with 4 different visualizations of employee performance across departments.</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <h2>📘 Diagram</h2>
+    <p><img src="/static/assets/images/placeholder_visualization_diagram.jpg" alt="Data Visualization Diagram Placeholder" /></p>
+  </div>
+
+  <div class="test">
+    <h2>🧭 Mini Project: Student Report Card Visualization</h2>
+    <p><strong>Objective:</strong> Use pandas plots to visualize a class's performance in three subjects.</p>
+
+    <ol>
+      <li>Create a DataFrame with names and marks in Math, Science, and English.</li>
+      <li>Generate a bar chart showing marks of all students.</li>
+      <li>Use a boxplot to understand the distribution per subject.</li>
+      <li>Create a line plot comparing subject averages over terms.</li>
+      <li>Visualize individual student scores using pie charts.</li>
+    </ol>
+
+    <pre><code>
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Step 1: Data
+df = pd.DataFrame({
+    'Name': ['A', 'B', 'C', 'D'],
+    'Math': [88, 76, 90, 85],
+    'Science': [84, 82, 89, 91],
+    'English': [78, 80, 85, 83]
+})
+
+# Step 2: Bar chart
+df.set_index('Name').plot(kind='bar', title='Student Scores')
+plt.show()
+
+# Step 3: Boxplot
+df.drop('Name', axis=1).plot(kind='box', title='Score Distribution')
+plt.show()
+
+# Step 4: Line plot for subject averages
+term_df = pd.DataFrame({
+    'Term': ['Term1', 'Term2', 'Term3'],
+    'Math': [85, 88, 90],
+    'Science': [80, 84, 89],
+    'English': [75, 78, 82]
+}).set_index('Term')
+term_df.plot(kind='line', marker='o', title='Subject Averages Over Terms')
+plt.show()
+
+# Step 5: Pie chart per student
+for i, row in df.iterrows():
+    row[1:].plot(kind='pie', labels=row.index[1:], autopct='%1.1f%%')
+    plt.title(f"Score Distribution: {row['Name']}")
+    plt.ylabel('')
+    plt.show()
+    </code></pre>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

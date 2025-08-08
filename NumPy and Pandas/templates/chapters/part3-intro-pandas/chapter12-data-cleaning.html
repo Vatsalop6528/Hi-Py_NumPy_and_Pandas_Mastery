@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 12: Data Cleaning in Pandas</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+
+<div class="container">
+      <h1>Chapter 12: Data Cleaning in Pandas</h1>
+    </div>
+
+
+<main class="chapter-content container">
+
+
+
+  <div class="note">
+    <p><strong>🧠 Concept:</strong> Data cleaning is the process of preparing raw data for analysis by handling missing values, duplicates, incorrect formats, and outliers.</p>
+  </div>
+
+  <div class="note">
+    <ul>
+      <li><strong>Missing Values:</strong> Handled using <code>isna()</code>, <code>fillna()</code>, or <code>dropna()</code></li>
+      <li><strong>Duplicates:</strong> Removed using <code>drop_duplicates()</code></li>
+      <li><strong>Data Types:</strong> Corrected with <code>astype()</code></li>
+      <li><strong>String Cleaning:</strong> Done using <code>str.strip()</code>, <code>str.lower()</code>, etc.</li>
+    </ul>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercises</h2>
+    <pre><code>
+import pandas as pd
+import numpy as np
+
+# 1. Create sample data with missing values
+data = {'Name': ['Alice', 'Bob', None], 'Age': [25, np.nan, 30]}
+df = pd.DataFrame(data)
+
+# 2. Detect missing values
+print(df.isna())
+
+# 3. Fill missing values
+df['Age'].fillna(df['Age'].mean(), inplace=True)
+
+# 4. Drop rows with any missing data
+df_cleaned = df.dropna()
+
+# 5. Remove duplicates
+df = pd.DataFrame({'A': [1, 2, 2, 3], 'B': [4, 5, 5, 6]})
+df = df.drop_duplicates()
+
+# 6. Convert data type
+df['A'] = df['A'].astype(float)
+
+# 7. Clean string columns
+df = pd.DataFrame({'Name': [' Alice ', 'Bob', ' Charlie ']})
+df['Name'] = df['Name'].str.strip()
+
+# 8. Replace values
+df['Name'].replace('Bob', 'Robert', inplace=True)
+
+# 9. Rename columns
+df.rename(columns={'Name': 'StudentName'}, inplace=True)
+
+# 10. Detect outliers using IQR
+df = pd.DataFrame({'Marks': [10, 20, 21, 23, 99, 100, 101]})
+Q1 = df['Marks'].quantile(0.25)
+Q3 = df['Marks'].quantile(0.75)
+IQR = Q3 - Q1
+filtered = df[(df['Marks'] >= Q1 - 1.5 * IQR) & (df['Marks'] <= Q3 + 1.5 * IQR)]
+
+# 11. Replace outliers
+df.loc[df['Marks'] > Q3 + 1.5 * IQR, 'Marks'] = df['Marks'].median()
+
+# 12. Parse dates
+df = pd.DataFrame({'Date': ['2022-01-01', '2022/02/01', 'March 3, 2022']})
+df['Date'] = pd.to_datetime(df['Date'])
+
+# 13. Remove rows with specific value
+df = df[df['Marks'] != 0]
+
+# 14. Map values to standard format
+df = pd.DataFrame({'Gender': ['M', 'F', 'm', 'f']})
+df['Gender'] = df['Gender'].str.upper().map({'M': 'Male', 'F': 'Female'})
+
+# 15. Remove special characters from string
+df = pd.DataFrame({'Product': ['@item1$', 'item_2#']})
+df['Product'] = df['Product'].str.replace(r'\W+', '', regex=True)
+    </code></pre>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenges</h2>
+    <ul>
+      <li><strong>Easy:</strong> Load a CSV file and drop all rows with missing values.</li>
+      <li><strong>Medium:</strong> Replace all missing numeric values with column median and clean whitespace from string columns.</li>
+      <li><strong>Hard:</strong> Detect outliers using the IQR method and replace them with the column median.</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <h2>📘 Diagrams</h2>
+    <p><img src="/static/assets/images/placeholder_data_cleaning_diagram.jpg" alt="Data Cleaning Flowchart Placeholder" /></p>
+  </div>
+
+  <div class="test">
+    <h2>🧭 Mini Project: Clean Sales Data</h2>
+    <p><strong>Objective:</strong> Given a sales dataset, clean it to prepare for analysis.</p>
+    <ol>
+      <li>Load a dataset with missing values, inconsistent formats, and some outliers.</li>
+      <li>Drop rows where "CustomerName" is missing.</li>
+      <li>Fill missing "Amount" values with the column average.</li>
+      <li>Convert "Date" column to datetime format.</li>
+      <li>Remove outliers from "Amount" using IQR.</li>
+      <li>Standardize the "Region" column to proper case.</li>
+    </ol>
+
+    <pre><code>
+import pandas as pd
+
+# Step 1: Load dataset
+df = pd.read_csv("sales_data.csv")
+
+# Step 2: Drop rows with missing CustomerName
+df = df.dropna(subset=['CustomerName'])
+
+# Step 3: Fill missing Amounts
+df['Amount'].fillna(df['Amount'].mean(), inplace=True)
+
+# Step 4: Parse Date column
+df['Date'] = pd.to_datetime(df['Date'])
+
+# Step 5: Outlier removal
+Q1 = df['Amount'].quantile(0.25)
+Q3 = df['Amount'].quantile(0.75)
+IQR = Q3 - Q1
+df = df[(df['Amount'] >= Q1 - 1.5 * IQR) & (df['Amount'] <= Q3 + 1.5 * IQR)]
+
+# Step 6: Standardize region format
+df['Region'] = df['Region'].str.title()
+
+# Final check
+print(df.head())
+    </code></pre>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

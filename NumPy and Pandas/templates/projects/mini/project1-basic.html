@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Mini Project 1: Data Analysis with Pandas and NumPy</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f7f9;
+            padding: 40px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+        }
+
+        pre {
+            background-color: #eef2f5;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            overflow-x: auto;
+            border-radius: 5px;
+        }
+
+        ul {
+            background-color: #fefefe;
+            padding: 20px;
+            border-radius: 5px;
+            list-style-type: disc;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .solution {
+            background-color: #eafaf1;
+            padding: 15px;
+            border-left: 4px solid #2ecc71;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .toggle-button {
+            display: inline-block;
+            background-color: #2ecc71;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mini Project 1: Basic Data Analysis with Pandas and NumPy</h1>
+
+    <div class="section">
+        <h2>📘 Introduction</h2>
+        <p>
+            In this mini project, you will work with a CSV dataset using Python libraries <strong>Pandas</strong> and <strong>NumPy</strong>.
+            You will perform basic data cleaning and compute some useful statistics to understand the dataset better.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>🧩 Task List</h2>
+        <ul>
+            <li>Load a dataset (e.g., a CSV file containing student marks or sales data)</li>
+            <li>Inspect the data (head, shape, info, missing values)</li>
+            <li>Handle missing or invalid values</li>
+            <li>Compute basic statistics using NumPy and Pandas (mean, median, std, etc.)</li>
+            <li>Summarize insights</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>💡 Sample Code Blocks</h2>
+
+        <h3>1. Load the Dataset</h3>
+        <pre><code>import pandas as pd
+
+df = pd.read_csv("data.csv")
+print(df.head())</code></pre>
+
+        <h3>2. Clean the Data</h3>
+        <pre><code># Drop rows with missing values
+df = df.dropna()
+
+# Replace invalid data
+df['score'] = pd.to_numeric(df['score'], errors='coerce')</code></pre>
+
+        <h3>3. Compute Statistics</h3>
+        <pre><code>import numpy as np
+
+mean_score = np.mean(df['score'])
+median_score = np.median(df['score'])
+std_dev = np.std(df['score'])
+
+print("Mean:", mean_score)
+print("Median:", median_score)
+print("Standard Deviation:", std_dev)</code></pre>
+    </div>
+
+    <div class="section">
+        <h2>✅ Final Solution Example</h2>
+        <button class="toggle-button" onclick="toggleSolution()">Show/Hide Solution</button>
+        <div class="solution" id="solution-block">
+            <pre><code>import pandas as pd
+import numpy as np
+
+# Step 1: Load dataset
+df = pd.read_csv("students.csv")
+
+# Step 2: Inspect
+print(df.info())
+print(df.describe())
+
+# Step 3: Clean missing or invalid values
+df['score'] = pd.to_numeric(df['score'], errors='coerce')
+df = df.dropna()
+
+# Step 4: Compute statistics
+mean_score = np.mean(df['score'])
+median_score = np.median(df['score'])
+std_score = np.std(df['score'])
+
+print(f"Mean Score: {mean_score}")
+print(f"Median Score: {median_score}")
+print(f"Standard Deviation: {std_score}")</code></pre>
+        </div>
+    </div>
+
+    <script>
+        function toggleSolution() {
+            var sol = document.getElementById('solution-block');
+            sol.style.display = sol.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Mini Project 2: Data Cleaning with Pandas and NumPy</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f7f9;
+            padding: 40px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+        }
+
+        pre {
+            background-color: #eef2f5;
+            border-left: 4px solid #e67e22;
+            padding: 15px;
+            overflow-x: auto;
+            border-radius: 5px;
+        }
+
+        ul {
+            background-color: #fefefe;
+            padding: 20px;
+            border-radius: 5px;
+            list-style-type: disc;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .solution {
+            background-color: #fef9e7;
+            padding: 15px;
+            border-left: 4px solid #f1c40f;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .toggle-button {
+            display: inline-block;
+            background-color: #f1c40f;
+            color: #2c3e50;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mini Project 2: Data Cleaning with Pandas and NumPy</h1>
+
+    <div class="section">
+        <h2>🧼 Introduction</h2>
+        <p>
+            In this project, you will focus primarily on data cleaning. You'll load a dataset, identify and correct issues
+            such as missing values, outliers, incorrect types, and duplicate rows. Then you'll perform basic statistics to verify your cleaning.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>📋 Task List</h2>
+        <ul>
+            <li>Load a CSV dataset (e.g., employee records, sales data, etc.)</li>
+            <li>Inspect data for missing, inconsistent, or duplicated entries</li>
+            <li>Handle missing values appropriately (drop, fill, impute)</li>
+            <li>Convert data types where necessary</li>
+            <li>Remove or flag outliers</li>
+            <li>Drop duplicates</li>
+            <li>Perform basic statistics on cleaned data</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>💡 Sample Code Blocks</h2>
+
+        <h3>1. Load and Inspect</h3>
+        <pre><code>import pandas as pd
+
+df = pd.read_csv("data.csv")
+print(df.info())
+print(df.isnull().sum())</code></pre>
+
+        <h3>2. Handle Missing Values</h3>
+        <pre><code># Fill missing numeric values with the mean
+df['salary'] = df['salary'].fillna(df['salary'].mean())
+
+# Drop rows where 'name' is missing
+df = df.dropna(subset=['name'])</code></pre>
+
+        <h3>3. Handle Duplicates</h3>
+        <pre><code># Drop duplicate rows
+df = df.drop_duplicates()</code></pre>
+
+        <h3>4. Convert Data Types</h3>
+        <pre><code># Convert 'join_date' column to datetime
+df['join_date'] = pd.to_datetime(df['join_date'])</code></pre>
+
+        <h3>5. Handle Outliers</h3>
+        <pre><code>import numpy as np
+
+# Remove rows where 'age' is outside 3 standard deviations
+z_scores = (df['age'] - df['age'].mean()) / df['age'].std()
+df = df[(np.abs(z_scores) < 3)]</code></pre>
+    </div>
+
+    <div class="section">
+        <h2>✅ Final Solution (Hidden)</h2>
+        <button class="toggle-button" onclick="toggleSolution()">Show/Hide Solution</button>
+        <div class="solution" id="solution-block">
+            <pre><code>import pandas as pd
+import numpy as np
+
+# Load dataset
+df = pd.read_csv("employees.csv")
+
+# Inspect
+print(df.info())
+print(df.describe())
+print(df.isnull().sum())
+
+# Fill missing salaries with the mean
+df['salary'] = pd.to_numeric(df['salary'], errors='coerce')
+df['salary'] = df['salary'].fillna(df['salary'].mean())
+
+# Drop rows with missing names or department
+df = df.dropna(subset=['name', 'department'])
+
+# Convert date columns
+df['hire_date'] = pd.to_datetime(df['hire_date'], errors='coerce')
+
+# Drop duplicates
+df = df.drop_duplicates()
+
+# Handle outliers in 'age'
+z_scores = (df['age'] - df['age'].mean()) / df['age'].std()
+df = df[(np.abs(z_scores) < 3)]
+
+# Final stats
+print("Cleaned DataFrame Shape:", df.shape)
+print("Average Salary:", df['salary'].mean())
+print("Age Range:", df['age'].min(), "to", df['age'].max())</code></pre>
+        </div>
+    </div>
+
+    <script>
+        function toggleSolution() {
+            var sol = document.getElementById('solution-block');
+            sol.style.display = sol.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>

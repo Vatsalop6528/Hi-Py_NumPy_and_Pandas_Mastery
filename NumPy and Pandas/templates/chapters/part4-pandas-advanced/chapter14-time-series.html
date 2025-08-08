@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 14: Time Series Analysis in Pandas</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+
+<div class="container">
+      <h1>Chapter 14: Time Series Analysis in Pandas</h1>
+    </div>
+
+
+<main class="chapter-content container">
+
+
+
+  <div class="note">
+    <p><strong>🧠 Concept:</strong> Time series data involves data points indexed in time order. Pandas provides powerful tools to handle datetime indexing, resampling, shifting, rolling operations, and frequency conversion.</p>
+  </div>
+
+  <div class="note">
+    <ul>
+      <li><strong>DateTimeIndex:</strong> Special index type for time-stamped data.</li>
+      <li><strong>Parsing Dates:</strong> <code>pd.to_datetime()</code> to convert strings to datetime objects.</li>
+      <li><strong>Resampling:</strong> Changing frequency using <code>resample()</code>.</li>
+      <li><strong>Rolling Window:</strong> Smoothing time series using moving averages via <code>rolling()</code>.</li>
+      <li><strong>Shifting:</strong> Shifting data backward or forward in time with <code>shift()</code> or <code>tshift()</code>.</li>
+    </ul>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercises</h2>
+    <pre><code>
+import pandas as pd
+import numpy as np
+
+# Create date range
+dates = pd.date_range(start='2023-01-01', periods=10, freq='D')
+values = np.random.randint(10, 100, size=10)
+ts = pd.Series(values, index=dates)
+
+# 1. Print the time series
+print(ts)
+
+# 2. Convert string to datetime
+date_strs = ['2023-01-01', '2023-02-01']
+print(pd.to_datetime(date_strs))
+
+# 3. Resample to weekly average
+print(ts.resample('W').mean())
+
+# 4. Rolling average
+print(ts.rolling(window=3).mean())
+
+# 5. Shifting values forward by 1
+print(ts.shift(1))
+
+# 6. Difference between consecutive days
+print(ts.diff())
+
+# 7. Filtering by date range
+print(ts['2023-01-03':'2023-01-06'])
+
+# 8. Frequency conversion from days to 2 days
+print(ts.asfreq('2D'))
+
+# 9. Add time to index
+ts2 = ts.copy()
+ts2.index = ts2.index + pd.Timedelta(days=5)
+print(ts2)
+
+# 10. Fill missing dates after resampling
+print(ts.resample('D').mean().fillna(method='ffill'))
+
+# 11. Date attributes
+print(ts.index.month)
+print(ts.index.dayofweek)
+
+# 12. Plotting (if using Jupyter)
+# ts.plot()
+
+# 13. Datetime in DataFrame
+df = pd.DataFrame({
+  'Date': pd.date_range('2023-01-01', periods=5),
+  'Sales': [100, 200, 150, 300, 250]
+})
+df.set_index('Date', inplace=True)
+print(df)
+
+# 14. Daily → Monthly sum
+print(df.resample('M').sum())
+
+# 15. Business day frequency
+bd_range = pd.date_range(start='2023-01-01', periods=10, freq='B')
+print(bd_range)
+    </code></pre>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenges</h2>
+    <ul>
+      <li><strong>Easy:</strong> Create a time series with 15 days of random data and resample it weekly.</li>
+      <li><strong>Medium:</strong> Find the 7-day rolling average of a sales series and plot the trend.</li>
+      <li><strong>Hard:</strong> Build a DataFrame with multiple product sales and resample monthly totals and weekly averages for each.</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <h2>📘 Diagrams</h2>
+    <p><img src="/static/assets/images/placeholder_time_series_diagram.tif" alt="Time Series Diagram Placeholder" /></p>
+  </div>
+
+  <div class="test">
+    <h2>🧭 Mini Project: Time Series Temperature Tracker</h2>
+    <p><strong>Objective:</strong> Build a temperature tracker that analyzes daily temperature data for 2 months and computes trends and averages.</p>
+    <ol>
+      <li>Create a date range from Jan 1, 2023 to Feb 28, 2023 (daily).</li>
+      <li>Generate random temperature values (between 10°C and 30°C).</li>
+      <li>Plot the daily temperature (optional for notebooks).</li>
+      <li>Calculate 7-day rolling average temperature.</li>
+      <li>Resample weekly and monthly average temperature.</li>
+    </ol>
+
+    <pre><code>
+import pandas as pd
+import numpy as np
+
+# Step 1: Generate time series
+dates = pd.date_range(start='2023-01-01', end='2023-02-28', freq='D')
+temps = np.random.randint(10, 30, size=len(dates))
+temperature_series = pd.Series(temps, index=dates)
+
+# Step 2: 7-day rolling average
+rolling_avg = temperature_series.rolling(window=7).mean()
+
+# Step 3: Weekly average
+weekly_avg = temperature_series.resample('W').mean()
+
+# Step 4: Monthly average
+monthly_avg = temperature_series.resample('M').mean()
+
+# Step 5: Display results
+print("Daily Temps:\n", temperature_series.head())
+print("7-day Rolling Avg:\n", rolling_avg.head(10))
+print("Weekly Avg:\n", weekly_avg)
+print("Monthly Avg:\n", monthly_avg)
+    </code></pre>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

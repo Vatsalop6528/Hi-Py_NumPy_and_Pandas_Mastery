@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 11: Series and DataFrames</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+
+<div class="container">
+      <h1>Chapter 11: Series and DataFrames</h1>
+    </div>
+
+
+<main class="chapter-content container">
+
+
+
+  <div class="note">
+    <p><strong>🧠 Concept:</strong> <code>Series</code> and <code>DataFrames</code> are the two core data structures in Pandas. Series is a 1D labeled array, and DataFrame is a 2D table-like structure with labeled axes (rows and columns).</p>
+  </div>
+
+  <div class="note">
+    <p><strong>Series:</strong> Think of a Series as a column in a spreadsheet. It has values and an index (labels).</p>
+    <p><strong>DataFrame:</strong> A DataFrame is like a whole spreadsheet – made up of multiple Series aligned by a common index.</p>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercises</h2>
+    <pre><code>
+import pandas as pd
+
+# 1. Create a Series from a list
+s = pd.Series([10, 20, 30])
+
+# 2. Create a Series with custom index
+s2 = pd.Series([100, 200, 300], index=['a', 'b', 'c'])
+
+# 3. Access elements by index
+print(s2['b'])  # 200
+
+# 4. Create a DataFrame from dictionary
+data = {'Name': ['Alice', 'Bob'], 'Age': [25, 30]}
+df = pd.DataFrame(data)
+
+# 5. Access column
+print(df['Name'])
+
+# 6. Access row by label
+print(df.loc[0])
+
+# 7. Add a new column
+df['Score'] = [85, 90]
+
+# 8. Filter rows
+print(df[df['Age'] > 25])
+
+# 9. Check data types
+print(df.dtypes)
+
+# 10. Get DataFrame shape
+print(df.shape)
+
+# 11. Get summary stats
+print(df.describe())
+
+# 12. Rename columns
+df.rename(columns={'Score': 'Marks'}, inplace=True)
+
+# 13. Drop a column
+df.drop('Marks', axis=1, inplace=True)
+
+# 14. Set index
+df.set_index('Name', inplace=True)
+
+# 15. Reset index
+df.reset_index(inplace=True)
+    </code></pre>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenges</h2>
+    <ul>
+      <li><strong>Easy:</strong> Create a Series of your 5 favorite numbers with custom labels.</li>
+      <li><strong>Medium:</strong> Create a DataFrame with columns: Name, Age, City. Add a new column with the length of each name.</li>
+      <li><strong>Hard:</strong> Load a CSV into a DataFrame and filter all rows where a numeric column (e.g., "Salary") is above average.</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <h2>📘 Diagrams</h2>
+    <p><img src="/static/assets/images/placeholder_diagram_series_dataframe.png" alt="Series vs DataFrame Diagram" /></p>
+  </div>
+
+  <div class="test">
+    <h2>🧭 Mini Project: Student Score Tracker</h2>
+    <p><strong>Goal:</strong> Build a small DataFrame that tracks students' names, subjects, and their scores. Then perform some analysis on it.</p>
+    <ol>
+      <li>Create a DataFrame with 5 students and their Math, Science, and English scores.</li>
+      <li>Add a new column called "Average" that calculates the average score.</li>
+      <li>Filter students with average score > 80.</li>
+      <li>Sort the DataFrame by average score.</li>
+      <li>Display only top 3 scorers with their subjects and average.</li>
+    </ol>
+    <pre><code>
+import pandas as pd
+
+data = {
+    'Name': ['Aarav', 'Diya', 'Karan', 'Meena', 'Ravi'],
+    'Math': [78, 88, 92, 85, 67],
+    'Science': [80, 90, 85, 88, 70],
+    'English': [75, 95, 90, 82, 72]
+}
+
+df = pd.DataFrame(data)
+
+# Step 1: Average score
+df['Average'] = df[['Math', 'Science', 'English']].mean(axis=1)
+
+# Step 2: Filter students with average > 80
+top_df = df[df['Average'] > 80]
+
+# Step 3: Sort by average
+top_df_sorted = top_df.sort_values(by='Average', ascending=False)
+
+# Step 4: Top 3 students
+print(top_df_sorted.head(3))
+    </code></pre>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

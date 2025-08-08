@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 22: Practice Sets</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+<div class="container">
+      <h1>🧠 Chapter 22: Practice Sets</h1>
+    </div>
+
+<main class="chapter-content container">
+
+
+
+  <div class="note">
+    <h2>Concept Overview</h2>
+    <p>
+      This chapter is packed with focused, real-world oriented practice sets categorized by topic. Each set allows you to reinforce and deepen your command over NumPy and Pandas. The idea is to simulate actual analysis work — from cleaning to transformation to summarizing data.
+    </p>
+    <p>
+      🗂 Topics include:
+    </p>
+    <ul>
+      <li>Data Cleaning & Preprocessing</li>
+      <li>Aggregation & Grouping</li>
+      <li>Time Series Analysis</li>
+      <li>Working with Nulls & Outliers</li>
+      <li>Custom Functions with Apply</li>
+    </ul>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Practice Code Exercises</h2>
+    <pre><code>
+# 1. Replace all negative values with 0
+df[df < 0] = 0
+
+# 2. Find top 5 highest salaries in each department
+df.groupby('department')['salary'].nlargest(5)
+
+# 3. Convert 'hire_date' to datetime and extract year
+df['hire_year'] = pd.to_datetime(df['hire_date']).dt.year
+
+# 4. Normalize all numerical columns
+df_scaled = (df - df.mean()) / df.std()
+
+# 5. Find the most frequent item in 'category' column
+df['category'].mode()[0]
+
+# 6. Fill missing values in 'score' with forward fill
+df['score'].fillna(method='ffill', inplace=True)
+
+# 7. Create a rolling average of sales (7-day window)
+df['rolling_avg'] = df['sales'].rolling(window=7).mean()
+
+# 8. Identify outliers in 'price' using IQR method
+
+Q1 = df['price'].quantile(0.25)
+Q3 = df['price'].quantile(0.75)
+IQR = Q3 - Q1
+df_outliers = df[(df['price'] < Q1 - 1.5*IQR) | (df['price'] > Q3 + 1.5*IQR)]
+
+# 9. Pivot sales data into month-wise matrix
+df.pivot_table(values='sales', index='product', columns='month')
+
+# 10. Add a column with total score per row
+df['total'] = df[['score1', 'score2', 'score3']].sum(axis=1)
+
+# 11. Remove rows with more than 2 NaNs
+df = df[df.isnull().sum(axis=1) <= 2]
+
+# 12. Create frequency table of column values
+df['region'].value_counts()
+
+# 13. Use groupby + apply to rank players within teams
+df['rank'] = df.groupby('team')['points'].rank(ascending=False)
+
+# 14. Detect and flag duplicates
+df['is_duplicate'] = df.duplicated()
+
+# 15. Sort dataframe by multiple columns
+df.sort_values(by=['region', 'sales'], ascending=[True, False])
+
+# 16. Save only selected columns to a CSV
+df[['name', 'score', 'grade']].to_csv('report.csv', index=False)
+    </code></pre>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenges (Easy → Hard)</h2>
+    <ul>
+      <li><strong>🟢 Easy:</strong> Convert a date column to day of the week and filter all Mondays</li>
+      <li><strong>🟡 Medium:</strong> Find all products that have ever gone out of stock more than 3 times</li>
+      <li><strong>🟠 Hard:</strong> Aggregate and visualize quarterly performance using time-based indexing</li>
+      <li><strong>🔴 Expert:</strong> Write a data pipeline that reads multiple Excel files, merges them, cleans invalid entries, and generates a summary report</li>
+    </ul>
+  </div>
+
+
+
+  <div class="test">
+    <h2>🧭 Mini Project: Movie Ratings Cleanup</h2>
+    <p><strong>Goal:</strong> Clean, analyze, and transform a messy movie rating dataset using Pandas.</p>
+
+    <ul>
+      <li>Load <code>movies_raw.csv</code> with missing and incorrect data</li>
+      <li>Clean column names and standardize rating scales</li>
+      <li>Drop movies with less than 10 reviews</li>
+      <li>Remove duplicate titles and blank rows</li>
+      <li>Create a new column: <code>avg_rating</code></li>
+      <li>Group by genre and find the highest-rated movies</li>
+    </ul>
+
+    <pre><code>
+# Load and inspect
+df = pd.read_csv('movies_raw.csv')
+df.columns = df.columns.str.strip().str.lower().str.replace(' ', '_')
+
+# Clean ratings (scale all to 0-10)
+df['rating'] = df['rating'] * 2
+
+# Drop rows
+df = df[df['review_count'] >= 10]
+df = df.drop_duplicates(subset='title')
+df = df.dropna(how='all')
+
+# New column: avg_rating
+df['avg_rating'] = (df['critics_score'] + df['user_score']) / 2
+
+# Group and sort
+top_by_genre = df.groupby('genre').apply(lambda g: g.nlargest(3, 'avg_rating'))
+
+# Save clean version
+top_by_genre.to_csv('cleaned_top_movies.csv', index=False)
+    </code></pre>
+
+    <p>🎯 <strong>Deliverable:</strong> Submit your cleaned CSV + Python script for evaluation.</p>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

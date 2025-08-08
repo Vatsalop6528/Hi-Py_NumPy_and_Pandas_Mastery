@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter 2: NumPy Arrays in Depth</title>
+
+  <!-- Fonts & CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style/main.css" />
+</head>
+<body>
+
+  <!-- 🌟 HEADER -->
+  <!-- <header class="chapter-header gradient">
+    <div class="container">
+      <h1>Chapter 2: NumPy Arrays in Depth</h1>
+      <p class="subtitle">Understanding the structure, behavior, and performance of NumPy arrays</p>
+    </div>
+  </header> -->
+
+  {% include 'components/header.html' %}
+
+
+  <div class="container">
+      <h1>Chapter 2: NumPy Arrays in Depth</h1>
+    </div>
+
+
+  <main class="chapter-content container">
+
+    <!-- 🧠 Concept Explanation -->
+    <section class="section">
+      <h2>🧠 Array Structure & Memory</h2>
+      <p>At the heart of NumPy is the <strong>ndarray</strong> (n-dimensional array), which provides a powerful data structure for efficient storage and manipulation of homogeneous data.</p>
+
+      <div class="note">
+        <strong>Note:</strong> Unlike Python lists, NumPy arrays use contiguous memory blocks and fixed types, allowing for faster computation and broadcasting.
+      </div>
+
+      <div class="note">
+          <h2>📘 Diagrams</h2>
+        <p><img src="/static/assets/images/numpy-array-structure-placeholder.png" style="width:850px; height:300px" alt="Array Memory Structure Diagram" /></p>
+        <p class="caption">Figure: NumPy array structure and metadata (placeholder)</p>
+      </div>
+    </section>
+
+    <!-- 🧪 Code Exercises -->
+    <section class="section">
+      <h2>🧪 Explore: 15 Array-Based Exercises</h2>
+
+      <div class="code">
+        <p><strong>Exercise 1:</strong> Check data type of a NumPy array</p>
+        <pre><code>arr = np.array([1.2, 3.5, 6.8])
+print(arr.dtype)</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 2:</strong> Change data type of array (float → int)</p>
+        <pre><code>arr_int = arr.astype(int)</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 3:</strong> Create a 3x3 matrix of all 7s</p>
+        <pre><code>np.full((3, 3), 7)</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 4:</strong> Create a 1D array and reshape to 2D</p>
+        <pre><code>np.arange(12).reshape(3, 4)</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 5:</strong> Flatten a 2D array</p>
+        <pre><code>matrix.flatten()</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 6:</strong> Stack two arrays vertically</p>
+        <pre><code>np.vstack([arr1, arr2])</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 7:</strong> Stack two arrays horizontally</p>
+        <pre><code>np.hstack([arr1, arr2])</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 8:</strong> Split an array into 3 equal parts</p>
+        <pre><code>np.array_split(arr, 3)</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 9:</strong> Create a 5x5 matrix and access the center element</p>
+        <pre><code>matrix[2, 2]</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 10:</strong> Transpose a matrix</p>
+        <pre><code>matrix.T</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 11:</strong> Create a 3D array</p>
+        <pre><code>np.arange(27).reshape(3, 3, 3)</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 12:</strong> Find the sum across rows</p>
+        <pre><code>np.sum(arr, axis=1)</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 13:</strong> Create a diagonal matrix</p>
+        <pre><code>np.diag([1, 2, 3])</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 14:</strong> Identify array shape and size</p>
+        <pre><code>arr.shape, arr.size</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 15:</strong> Generate linearly spaced values</p>
+        <pre><code>np.linspace(0, 10, 5)</code></pre>
+      </div>
+    </section>
+
+    <!-- 💡 Challenges -->
+    <section class="section">
+      <h2>💡 Challenges</h2>
+
+      <div class="challenge easy">
+        <strong>Easy:</strong> Create a 4x4 array and replace the main diagonal with 9s.
+      </div>
+
+      <div class="challenge medium">
+        <strong>Medium:</strong> Create a 3D array (2x3x4) and swap axes 0 and 2.
+      </div>
+
+      <div class="challenge hard">
+        <strong>Hard:</strong> Generate a 1000x1000 matrix and measure time taken for row-wise and column-wise sum.
+      </div>
+    </section>
+
+    <!-- 🧭 Mini Project -->
+    <section class="section">
+      <h2>🧭 Mini Project: Sudoku Board Generator</h2>
+      <p>Build a basic 9x9 Sudoku grid structure using NumPy arrays with placeholder values and format them in a readable layout.</p>
+
+      <div class="test">
+        <strong>Step 1:</strong> Create a 9x9 grid filled with zeros<br />
+        <code>board = np.zeros((9,9), dtype=int)</code>
+      </div>
+
+      <div class="test">
+        <strong>Step 2:</strong> Fill the first row with digits 1 to 9 using permutation<br />
+        <code>board[0] = np.random.permutation(np.arange(1,10))</code>
+      </div>
+
+      <div class="test">
+        <strong>Step 3:</strong> Print the board with row dividers (using a loop)</br>
+        <code>
+for i in range(9):<br />
+&nbsp;&nbsp;&nbsp;&nbsp;if i % 3 == 0 and i != 0:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print("-"*21)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;print(" ".join(str(x) for x in board[i]))
+        </code>
+      </div>
+
+      <div class="note">
+        <strong>Tip:</strong> You can expand this project into a full Sudoku puzzle generator with logic and validation later in the course!
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 🔻 FOOTER -->
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>📘 Chapter 23: Exploratory Data Projects</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+<div class="container">
+      <h1>📘 Chapter 23: Exploratory Data Projects</h1>
+    </div>
+
+<main class="chapter-content container">
+
+
+
+  <div class="note">
+    <h2>🧠 Concept Overview</h2>
+    <p>
+      Exploratory Data Analysis (EDA) is the process of examining data sets to summarize their main characteristics, often using visual methods. In this chapter, you'll use your NumPy and Pandas skills to investigate real-world datasets, ask insightful questions, and derive meaningful insights.
+    </p>
+    <p>
+      You’ll practice:
+    </p>
+    <ul>
+      <li>Understanding dataset structure</li>
+      <li>Uncovering patterns and anomalies</li>
+      <li>Detecting relationships between variables</li>
+      <li>Cleaning and preparing data for analysis</li>
+      <li>Generating visualizations to support findings</li>
+    </ul>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercises</h2>
+    <pre><code>
+# 1. Load a CSV and show basic info
+df = pd.read_csv('dataset.csv')
+df.info()
+
+# 2. Count unique values in each column
+df.nunique()
+
+# 3. Find correlation between numeric columns
+df.corr()
+
+# 4. Visualize null values
+import seaborn as sns
+sns.heatmap(df.isnull(), cmap='viridis')
+
+# 5. Fill missing values with median
+df.fillna(df.median(), inplace=True)
+
+# 6. Detect outliers in 'amount'
+df['amount'].describe()
+
+# 7. Count top 5 most common categories
+df['category'].value_counts().head(5)
+
+# 8. Group by gender and find average spend
+df.groupby('gender')['spend'].mean()
+
+# 9. Check if a column has normal distribution
+import scipy.stats as stats
+stats.normaltest(df['score'])
+
+# 10. Create boxplot for income distribution
+sns.boxplot(x=df['income'])
+
+# 11. Find skewness of numerical columns
+df.skew()
+
+# 12. Remove extreme outliers using z-score
+from scipy.stats import zscore
+df = df[(np.abs(zscore(df.select_dtypes(include=np.number))) < 3).all(axis=1)]
+
+# 13. Count missing values by column
+df.isnull().sum()
+
+# 14. Create histogram for each numerical column
+df.hist(figsize=(12,8))
+
+# 15. Rename columns for clarity
+df.rename(columns={'amt': 'amount_spent'}, inplace=True)
+
+# 16. Compare distributions using KDE plot
+sns.kdeplot(df['score1'], label='Score 1')
+sns.kdeplot(df['score2'], label='Score 2')
+    </code></pre>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenges (Easy → Hard)</h2>
+    <ul>
+      <li><strong>🟢 Easy:</strong> Find and report all columns with over 50% missing data</li>
+      <li><strong>🟡 Medium:</strong> Clean a dataset by fixing column types, removing duplicates, and imputing missing data</li>
+      <li><strong>🟠 Hard:</strong> Group a sales dataset by region and month, and visualize revenue trends</li>
+      <li><strong>🔴 Expert:</strong> Create a correlation heatmap and report significant variable relationships in a customer dataset</li>
+    </ul>
+  </div>
+
+
+
+  <div class="test">
+    <h2>🧭 Mini Project: EDA on E-Commerce Dataset</h2>
+    <p><strong>Objective:</strong> Perform a complete exploratory data analysis on an e-commerce sales dataset to discover trends and potential improvements.</p>
+    <ul>
+      <li>📥 Load and explore <code>ecommerce_data.csv</code></li>
+      <li>🧼 Clean missing and incorrect values</li>
+      <li>🔎 Analyze top customers, popular products, and monthly trends</li>
+      <li>📊 Create visualizations: bar charts, pie charts, line plots</li>
+      <li>📈 Identify anomalies in transactions (e.g., high refunds)</li>
+    </ul>
+
+    <pre><code>
+# Load and inspect
+df = pd.read_csv('ecommerce_data.csv')
+df.head()
+df.info()
+
+# Clean data
+df.drop_duplicates(inplace=True)
+df['order_date'] = pd.to_datetime(df['order_date'])
+df.fillna({'refund': 0}, inplace=True)
+
+# Top customers by total spend
+top_customers = df.groupby('customer_id')['order_amount'].sum().sort_values(ascending=False).head(10)
+
+# Sales trend over months
+df['month'] = df['order_date'].dt.to_period('M')
+monthly_sales = df.groupby('month')['order_amount'].sum()
+
+# Plot
+import matplotlib.pyplot as plt
+monthly_sales.plot(kind='line', title='Monthly Revenue')
+
+# Refund anomalies
+df[df['refund'] > 500]
+    </code></pre>
+
+    <p>🎯 <strong>Deliverable:</strong> Submit a short PDF report with key insights and supporting charts.</p>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

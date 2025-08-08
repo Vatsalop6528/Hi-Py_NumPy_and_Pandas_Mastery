@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    <title>Capstone Project: Data Mastery</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f7f9;
+            padding: 40px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+        }
+
+        pre {
+            background-color: #eef2f5;
+            border-left: 4px solid #2980b9;
+            padding: 15px;
+            overflow-x: auto;
+            border-radius: 5px;
+        }
+
+        ul {
+            background-color: #fefefe;
+            padding: 20px;
+            border-radius: 5px;
+            list-style-type: disc;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .solution {
+            background-color: #fef9e7;
+            padding: 15px;
+            border-left: 4px solid #f1c40f;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .toggle-button {
+            display: inline-block;
+            background-color: #f1c40f;
+            color: #2c3e50;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .summary {
+            background-color: #e8f8f5;
+            border-left: 4px solid #1abc9c;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>📘 Capstone Project: Data Mastery with Pandas, NumPy & Visualization</h1>
+
+    <div class="section">
+        <h2>🔍 Project Overview</h2>
+        <p>
+            In this final capstone project, you'll integrate all your knowledge to analyze a dataset end-to-end. This includes
+            data cleaning, exploratory analysis, transformations with GroupBy/Merge/Pivot, and a bonus predictive ML task.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>📝 Project Tasks</h2>
+        <ul>
+            <li>1. Load a real-world dataset (e.g. ecommerce or students)</li>
+            <li>2. Clean the data: handle missing values, data types, duplicates</li>
+            <li>3. Explore and visualize trends, distributions, and relationships</li>
+            <li>4. Perform advanced grouping, merging, and pivoting</li>
+            <li>5. Bonus: Build a predictive model (classification or regression)</li>
+            <li>6. Summarize key insights and takeaways</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>💻 Starter Code</h2>
+        <pre><code>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load dataset
+df = pd.read_csv("ecommerce.csv")
+
+# Clean data
+df.drop_duplicates(inplace=True)
+df.dropna(subset=['user_id', 'price'], inplace=True)
+df['price'] = pd.to_numeric(df['price'], errors='coerce')
+df['purchase_date'] = pd.to_datetime(df['purchase_date'])</code></pre>
+    </div>
+
+    <div class="section">
+        <h2>📊 Visualizations</h2>
+        <pre><code># Distribution of Prices
+sns.histplot(df['price'], kde=True)
+plt.title("Price Distribution")
+plt.show()
+
+# Sales by Category
+sns.barplot(x='category', y='price', data=df, estimator=np.sum)
+plt.title("Total Sales by Category")
+plt.xticks(rotation=45)
+plt.show()</code></pre>
+    </div>
+
+    <div class="section">
+        <h2>📈 GroupBy / Pivot / Merge</h2>
+        <pre><code># Group by category
+category_stats = df.groupby('category')['price'].agg(['mean', 'sum', 'count'])
+
+# Monthly sales trend
+df['month'] = df['purchase_date'].dt.to_period('M')
+monthly_sales = df.groupby('month')['price'].sum()
+
+# Pivot table of gender vs category
+pivot = pd.pivot_table(df, values='price', index='gender', columns='category', aggfunc='mean')</code></pre>
+    </div>
+
+    <div class="section">
+        <h2>🤖 Bonus: ML Task</h2>
+        <pre><code>from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+
+# Predict price based on age and category
+df['category_encoded'] = df['category'].astype('category').cat.codes
+X = df[['age', 'category_encoded']]
+y = df['price']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+predictions = model.predict(X_test)
+print("MSE:", mean_squared_error(y_test, predictions))</code></pre>
+    </div>
+
+    <div class="section">
+        <h2>✅ Step-by-Step Hidden Solution</h2>
+        <button class="toggle-button" onclick="toggleSolution()">Show/Hide Solution</button>
+        <div class="solution" id="solution-block">
+            <pre><code># Step-by-step from load to ML
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+
+df = pd.read_csv("ecommerce.csv")
+df.drop_duplicates(inplace=True)
+df.dropna(subset=['user_id', 'price'], inplace=True)
+df['price'] = pd.to_numeric(df['price'], errors='coerce')
+df['purchase_date'] = pd.to_datetime(df['purchase_date'])
+
+sns.histplot(df['price'], kde=True)
+plt.title("Price Distribution")
+plt.show()
+
+sns.barplot(x='category', y='price', data=df, estimator=np.sum)
+plt.title("Total Sales by Category")
+plt.xticks(rotation=45)
+plt.show()
+
+df['month'] = df['purchase_date'].dt.to_period('M')
+monthly_sales = df.groupby('month')['price'].sum()
+
+pivot = pd.pivot_table(df, values='price', index='gender', columns='category', aggfunc='mean')
+
+df['category_encoded'] = df['category'].astype('category').cat.codes
+X = df[['age', 'category_encoded']]
+y = df['price']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+model = LinearRegression()
+model.fit(X_train, y_train)
+predictions = model.predict(X_test)
+print("MSE:", mean_squared_error(y_test, predictions))</code></pre>
+        </div>
+    </div>
+
+    <div class="section summary">
+        <h2>📌 Takeaways</h2>
+        <ul>
+            <li>You cleaned and prepared a dataset for analysis</li>
+            <li>You explored data with visualizations and statistical summaries</li>
+            <li>You used GroupBy, Merge, and Pivot to generate insights</li>
+            <li>You optionally applied a regression model for prediction</li>
+            <li>Congrats on completing the capstone project! 🎉</li>
+        </ul>
+    </div>
+
+    <script>
+        function toggleSolution() {
+            var sol = document.getElementById('solution-block');
+            sol.style.display = sol.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>

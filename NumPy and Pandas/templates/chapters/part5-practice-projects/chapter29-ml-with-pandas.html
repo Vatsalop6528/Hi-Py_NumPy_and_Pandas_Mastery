@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 29: Machine Learning with Pandas</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+<div class="container">
+      <h1>Chapter 29: Machine Learning with Pandas</h1>
+    </div>
+
+
+<main class="chapter-content container">
+
+  <div class="note">
+    <h2>🧠 Concept: Using Pandas for ML Preprocessing</h2>
+    <p>Pandas plays a key role in preparing datasets for machine learning models. It helps in handling missing values, encoding categorical data, feature engineering, normalization, and exploratory data analysis (EDA).</p>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercises</h2>
+    <ol>
+      <li>Load a CSV dataset into a DataFrame.</li>
+      <li>Handle missing values using `.fillna()` and `.dropna()`.</li>
+      <li>Convert categorical data into numerical using `pd.get_dummies()`.</li>
+      <li>Split dataset into features and target columns.</li>
+      <li>Normalize a column using Min-Max scaling.</li>
+      <li>Perform basic EDA using `.describe()` and `.corr()`.</li>
+      <li>Visualize features using histograms and boxplots (via Matplotlib or Seaborn).</li>
+      <li>Encode binary categorical data using `.map()`.</li>
+      <li>Create new features (e.g., ratios, bins, flags).</li>
+      <li>Drop irrelevant features for ML.</li>
+      <li>Use `.value_counts()` to check class imbalance.</li>
+      <li>Split data into training and test sets using `train_test_split()`.</li>
+      <li>Apply a simple model (like Logistic Regression or Random Forest).</li>
+      <li>Predict and evaluate the model using accuracy score and confusion matrix.</li>
+      <li>Use `.groupby()` to generate class-level statistics.</li>
+      <li>Visualize prediction errors using scatterplots.</li>
+      <li>Perform feature scaling with `StandardScaler()`.</li>
+      <li>Use `pipeline` to combine transformations and model.</li>
+      <li>Feature selection using `.corr()` or `.select_dtypes()`.</li>
+      <li>Export the final preprocessed data using `.to_csv()`.</li>
+    </ol>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenges</h2>
+    <ul>
+      <li><strong>Easy:</strong> Clean a small dataset and prepare it for regression.</li>
+      <li><strong>Medium:</strong> Perform label encoding on a dataset with multiple categorical features.</li>
+      <li><strong>Hard:</strong> Build a preprocessing pipeline for a dataset with mixed datatypes and missing values, and train a model.</li>
+    </ul>
+  </div>
+
+  <div class="test">
+    <h2>📘 Diagram</h2>
+    <p><img src="/static/assets/images/ml-preprocessing-diagram-placeholder.png" alt="ML Preprocessing Diagram (Placeholder)" /></p>
+  </div>
+
+  <div class="note">
+    <h2>🧠 Key Learning</h2>
+    <p>Before feeding any data into a machine learning model, it must be cleaned, transformed, and analyzed. Pandas provides a rich set of tools to make this process simple and powerful.</p>
+  </div>
+
+  <div class="test">
+    <h2>🧭 Mini Project: Predicting Student Grades</h2>
+    <p><strong>Objective:</strong> Use a student dataset to predict final grades using ML after preprocessing with Pandas.</p>
+    <ol>
+      <li>📥 Load the dataset (e.g., student.csv).</li>
+      <li>🧹 Clean missing or inconsistent data.</li>
+      <li>🧬 Encode categorical features like gender, school, etc.</li>
+      <li>📊 Perform EDA: Correlations, distributions, outlier detection.</li>
+      <li>🧠 Feature engineering: Create average of test scores, attendance flags.</li>
+      <li>🧪 Split into train-test datasets.</li>
+      <li>🔍 Apply a regression model (e.g., Linear Regression).</li>
+      <li>📈 Evaluate the model using MAE, RMSE.</li>
+      <li>📤 Export the cleaned and processed data for future use.</li>
+    </ol>
+    <p><strong>Bonus:</strong> Try training with RandomForestRegressor and compare results.</p>
+  </div>
+
+</main>
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

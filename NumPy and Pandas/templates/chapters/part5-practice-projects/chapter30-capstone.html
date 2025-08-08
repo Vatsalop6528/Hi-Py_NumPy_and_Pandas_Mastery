@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 30: Capstone Project – The Final Data Challenge</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+
+<div class="container">
+      <h1>Chapter 30: Capstone Project – The Final Data Challenge</h1>
+    </div>
+
+<main class="chapter-content container">
+
+  <div class="note">
+    <h2>🧠 Concept: Bringing Everything Together</h2>
+    <p>This capstone project is designed to test your complete understanding of NumPy and Pandas. It will combine data cleaning, analysis, visualization, and mini machine learning, wrapped into one real-world project.</p>
+    <p>You will be given a raw dataset and guided through every stage of transforming it into meaningful insights and predictions.</p>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercises</h2>
+    <ol>
+      <li>Import the dataset into a Pandas DataFrame.</li>
+      <li>Inspect structure using `.info()` and `.head()`.</li>
+      <li>Identify and handle missing data.</li>
+      <li>Detect and fix outliers in numerical columns.</li>
+      <li>Clean column names and reformat data types.</li>
+      <li>Use `.groupby()` and `.pivot_table()` to summarize key insights.</li>
+      <li>Apply `.merge()` to join related datasets.</li>
+      <li>Use `.apply()` and lambda for feature creation.</li>
+      <li>Convert date columns and create new time-based features.</li>
+      <li>Filter important features using correlation matrix.</li>
+      <li>Generate visualizations: histograms, bar charts, heatmaps.</li>
+      <li>Perform exploratory data analysis (EDA).</li>
+      <li>Use NumPy for numerical transformation (e.g., z-score, percentiles).</li>
+      <li>Create new categorical variables using binning.</li>
+      <li>Train-test split with `sklearn.model_selection`.</li>
+      <li>Normalize features using `StandardScaler`.</li>
+      <li>Build a basic model (optional: LogisticRegression or RandomForest).</li>
+      <li>Evaluate model performance using accuracy or RMSE.</li>
+      <li>Export clean dataset to `.csv`.</li>
+      <li>Write a summary of insights in a Markdown `.txt` file.</li>
+    </ol>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenges</h2>
+    <ul>
+      <li><strong>Easy:</strong> Clean and describe a customer dataset with Pandas.</li>
+      <li><strong>Medium:</strong> Use `.groupby()` and `.merge()` to analyze sales per region and month.</li>
+      <li><strong>Hard:</strong> Predict product demand using engineered features and model selection.</li>
+    </ul>
+  </div>
+
+
+
+  <div class="note">
+    <h2>🧠 Project Mindset</h2>
+    <p>Think like a data scientist. Focus on problem-solving, data storytelling, and decisions based on data. The tools (NumPy, Pandas) are your toolkit — but insight is your true power.</p>
+  </div>
+
+  <div class="test">
+    <h2>🧭 Mini Project: Analyzing a Startup's Growth</h2>
+    <p><strong>Scenario:</strong> You’ve been hired by a startup to understand their customer engagement and revenue trends over time. Your task is to clean and analyze the data, create visual insights, and forecast future growth patterns.</p>
+
+    <ol>
+      <li>📥 Import and preview the customer-growth.csv file.</li>
+      <li>🔍 Clean the data (remove NaNs, correct types).</li>
+      <li>📆 Extract and engineer features from the date columns.</li>
+      <li>📊 Visualize monthly growth in active users and revenue.</li>
+      <li>🧮 Analyze retention and churn rates.</li>
+      <li>📉 Identify outliers and anomalies.</li>
+      <li>🔗 Merge engagement data with marketing data.</li>
+      <li>📈 Forecast the next quarter using rolling averages or simple prediction.</li>
+      <li>📤 Export final dashboard-ready data.</li>
+      <li>📝 Write key takeaways for stakeholders.</li>
+    </ol>
+
+    <p><strong>Bonus:</strong> Use `matplotlib` or `seaborn` to generate presentation-ready charts.</p>
+  </div>
+
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

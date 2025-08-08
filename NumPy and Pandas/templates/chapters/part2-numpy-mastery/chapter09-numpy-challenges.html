@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 9: NumPy Challenges & Practice</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+
+<div class="container">
+      <h1>Chapter 9: NumPy Challenges & Practice</h1>
+    </div>
+
+
+<main class="chapter-content container">
+
+
+  <!-- 🧠 Concept Explanation -->
+  <div class="note">
+    <h2>🧠 Concept: Practicing with NumPy</h2>
+    <p>This chapter offers hands-on challenges that simulate real-world scenarios. Solving these will help you build confidence and skill in manipulating arrays, optimizing performance, and thinking algorithmically using NumPy.</p>
+  </div>
+
+  <div class="note">
+    <h2>🧠 Concept: Types of Challenges Covered</h2>
+    <ul>
+      <li>Data transformation & reshaping</li>
+      <li>Statistical computation</li>
+      <li>Logical indexing & filtering</li>
+      <li>Real-world matrix simulations</li>
+      <li>Optimization and memory challenges</li>
+    </ul>
+  </div>
+
+  <!-- 📘 Diagram Placeholder -->
+  <div class="note">
+    <h2>📘 Diagram</h2>
+    <p><em>[Insert Diagram: Problem-solving pipeline — from raw array to insight]</em></p>
+  </div>
+
+  <!-- 🧪 Code Exercises -->
+  <div class="code">
+    <h2>🧪 Code Exercises</h2>
+    <pre><code>
+import numpy as np
+
+# 1. Replace all negative values in array with 0
+arr = np.array([-3, 2, -1, 4])
+arr[arr < 0] = 0
+
+# 2. Generate a checkerboard matrix (8x8)
+cb = np.indices((8, 8)).sum(axis=0) % 2
+
+# 3. Find the 3 largest values in array
+arr = np.array([10, 20, 5, 8, 30, 50])
+top3 = np.sort(arr)[-3:]
+
+# 4. Reverse a 1D array
+np.flip(arr)
+
+# 5. Create a 3x3 matrix with values from 1 to 9
+mat = np.arange(1, 10).reshape(3, 3)
+
+# 6. Compute row-wise z-score
+z = (mat - mat.mean(axis=1, keepdims=True)) / mat.std(axis=1, keepdims=True)
+
+# 7. Replace max value in each row with 0
+rows = np.random.randint(1, 100, size=(5, 5))
+rows[np.arange(rows.shape[0]), rows.argmax(axis=1)] = 0
+
+# 8. Remove rows with any NaN
+data = np.array([[1, np.nan, 2], [4, 5, 6], [7, 8, 9]])
+clean = data[~np.isnan(data).any(axis=1)]
+
+# 9. Unique rows from 2D array
+data = np.array([[1,2],[3,4],[1,2]])
+np.unique(data, axis=0)
+
+# 10. Count frequency of elements in array
+arr = np.array([1, 2, 1, 3, 2, 4, 1])
+vals, counts = np.unique(arr, return_counts=True)
+    </code></pre>
+  </div>
+
+  <!-- 💡 Challenges -->
+  <div class="challenge">
+    <h2>💡 Challenge: Easy</h2>
+    <p>Given a 1D NumPy array, count how many values are greater than the mean of the array.</p>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenge: Medium</h2>
+    <p>Generate a 10x10 array with random integers. Replace all values divisible by 3 with -1 using vectorized indexing.</p>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenge: Hard</h2>
+    <p>Simulate a matrix of stock prices and calculate the best buy/sell day (like a 2D version of max profit problem). Use NumPy only.</p>
+  </div>
+
+  <!-- 🧭 Mini Project -->
+  <div class="test">
+    <h2>🧭 Mini Project: Image Pixel Manipulation (Grayscale Filter)</h2>
+    <p><strong>Goal:</strong> Simulate a basic grayscale image filter using NumPy arrays and apply transformations.</p>
+
+    <p><strong>Steps:</strong></p>
+    <ol>
+      <li>Create a 100x100x3 array representing an RGB image with random colors.</li>
+      <li>Convert the RGB image to grayscale using <code>gray = 0.2989*R + 0.5870*G + 0.1140*B</code>.</li>
+      <li>Normalize grayscale values between 0 and 1.</li>
+      <li>Apply a threshold: all pixels below 0.5 become 0, above 0.5 become 1.</li>
+    </ol>
+
+    <pre><code>
+# Step 1: Create RGB image array
+image = np.random.randint(0, 256, (100, 100, 3))
+
+# Step 2: Convert to grayscale
+gray = 0.2989 * image[:, :, 0] + 0.5870 * image[:, :, 1] + 0.1140 * image[:, :, 2]
+
+# Step 3: Normalize
+gray = gray / 255.0
+
+# Step 4: Apply threshold filter
+binary = np.where(gray < 0.5, 0, 1)
+
+print(binary.shape)  # Should be (100, 100)
+    </code></pre>
+
+    <p><strong>Bonus:</strong> Count total white vs black pixels. Visualize the matrix using a matplotlib heatmap (optional).</p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

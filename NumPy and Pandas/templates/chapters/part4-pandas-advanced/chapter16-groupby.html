@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 16: GroupBy in Pandas</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+
+<div class="container">
+      <h1>Chapter 16: GroupBy in Pandas</h1>
+    </div>
+
+
+<main class="chapter-content container">
+
+
+
+  <div class="note">
+    <p><strong>🧠 Concept:</strong> The <code>groupby()</code> function in Pandas is used to split data into groups based on one or more keys, apply functions to those groups, and combine the results. It’s a powerful tool for data summarization and aggregation.</p>
+    <ul>
+      <li><strong>Split → Apply → Combine:</strong> Group data, apply an operation (like sum or mean), and combine the result.</li>
+      <li><strong>Common Aggregation Functions:</strong> <code>sum()</code>, <code>mean()</code>, <code>count()</code>, <code>min()</code>, <code>max()</code>, <code>agg()</code>.</li>
+      <li><strong>GroupBy on Single/Multiple Columns</strong> and using custom functions.</li>
+      <li><strong>Grouped Filtering and Transformation</strong> using <code>filter()</code> and <code>transform()</code>.</li>
+    </ul>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercises</h2>
+    <pre><code>
+import pandas as pd
+
+# 1. Create DataFrame
+df = pd.DataFrame({
+    'Department': ['Sales', 'Sales', 'HR', 'HR', 'IT', 'IT'],
+    'Employee': ['Alice', 'Bob', 'Charlie', 'David', 'Eva', 'Frank'],
+    'Salary': [70000, 80000, 50000, 52000, 75000, 77000],
+    'Bonus': [5000, 6000, 2000, 2500, 4000, 4200]
+})
+
+# 2. Group by Department
+print(df.groupby('Department').mean())
+
+# 3. Sum of salary by department
+print(df.groupby('Department')['Salary'].sum())
+
+# 4. Count employees per department
+print(df.groupby('Department')['Employee'].count())
+
+# 5. Aggregate multiple functions
+print(df.groupby('Department').agg({'Salary': ['mean', 'max'], 'Bonus': 'sum'}))
+
+# 6. Group by multiple columns
+df['Year'] = [2023, 2023, 2024, 2024, 2023, 2024]
+print(df.groupby(['Department', 'Year'])['Salary'].mean())
+
+# 7. Use transform to normalize salary within groups
+df['Salary_Norm'] = df.groupby('Department')['Salary'].transform(lambda x: x / x.mean())
+print(df)
+
+# 8. Filter: keep groups with avg salary > 70k
+filtered = df.groupby('Department').filter(lambda x: x['Salary'].mean() > 70000)
+print(filtered)
+
+# 9. Custom function in agg()
+print(df.groupby('Department')['Bonus'].agg(lambda x: max(x) - min(x)))
+
+# 10. Get group object
+group_obj = df.groupby('Department')
+print(group_obj.get_group('IT'))
+
+# 11. Reset index after groupby
+grouped = df.groupby('Department', as_index=False)['Salary'].mean()
+print(grouped)
+
+# 12. Sort values post-group
+sorted_group = df.groupby('Department')['Salary'].sum().sort_values(ascending=False)
+print(sorted_group)
+
+# 13. Loop through groups
+for name, group in df.groupby('Department'):
+    print(f"\n{name} Department:\n", group)
+    </code></pre>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenges</h2>
+    <ul>
+      <li><strong>Easy:</strong> Group students by class and compute average grades.</li>
+      <li><strong>Medium:</strong> Find departments with total bonus above 10,000 using <code>groupby()</code> and <code>filter()</code>.</li>
+      <li><strong>Hard:</strong> Normalize monthly sales within each region using <code>transform()</code>, and compute performance difference between top and bottom performers.</li>
+    </ul>
+  </div>
+
+
+
+  <div class="test">
+    <h2>🧭 Mini Project: Employee Performance Analysis</h2>
+    <p><strong>Objective:</strong> Analyze salary and bonus data of employees grouped by departments and years.</p>
+    <ol>
+      <li>Create a DataFrame of employees with <code>Department</code>, <code>Year</code>, <code>Salary</code>, and <code>Bonus</code>.</li>
+      <li>Group by <code>Department</code> and compute average salary and bonus.</li>
+      <li>Use <code>agg()</code> to get max and min salary per group.</li>
+      <li>Filter departments with salary mean &gt; 75,000.</li>
+      <li>Visualize differences using <code>unstack()</code> (optional).</li>
+    </ol>
+
+    <pre><code>
+import pandas as pd
+
+# Step 1: Sample Data
+data = {
+    'Department': ['Sales', 'Sales', 'IT', 'IT', 'HR', 'HR'],
+    'Year': [2023, 2024, 2023, 2024, 2023, 2024],
+    'Salary': [70000, 72000, 80000, 82000, 55000, 57000],
+    'Bonus': [4000, 4500, 5000, 5500, 2000, 2500]
+}
+df = pd.DataFrame(data)
+
+# Step 2: Average salary and bonus
+print(df.groupby('Department')[['Salary', 'Bonus']].mean())
+
+# Step 3: Max and Min salary per department
+print(df.groupby('Department')['Salary'].agg(['max', 'min']))
+
+# Step 4: Filter departments with high average salary
+high_salary = df.groupby('Department').filter(lambda x: x['Salary'].mean() > 75000)
+print(high_salary)
+
+# Step 5: Unstack for better readability (optional)
+result = df.groupby(['Department', 'Year'])['Salary'].mean().unstack()
+print(result)
+    </code></pre>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

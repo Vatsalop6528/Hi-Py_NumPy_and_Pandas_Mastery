@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 21: Daily Drills</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+<div class="container">
+      <h1>Chapter 21: Daily Drills</h1>
+    </div>
+
+<main class="chapter-content container">
+
+
+
+  <div class="note">
+    <h2>🧠 Concept Overview</h2>
+    <p><strong>Daily Drills</strong> are quick, focused exercises designed to sharpen your Pandas & NumPy skills through consistent practice. You’ll face a variety of mini tasks—from cleaning data and reshaping structures to slicing, grouping, and aggregating—all within 5 to 15 lines of code.</p>
+    <ul>
+      <li>Speed-based micro-tasks</li>
+      <li>Simulated real-world datasets</li>
+      <li>Review + repetition = retention</li>
+      <li>Topics rotate across indexing, cleaning, merging, transforming, time series, and visualization</li>
+    </ul>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Drills (Daily Practice)</h2>
+    <pre><code>
+# 1. Rename all columns to lowercase
+df.columns = df.columns.str.lower()
+
+# 2. Replace missing values with forward fill
+df.fillna(method='ffill', inplace=True)
+
+# 3. Find top 5 rows with highest 'score'
+df.nlargest(5, 'score')
+
+# 4. Count unique values in 'category'
+df['category'].nunique()
+
+# 5. Create a new column from existing
+df['profit_margin'] = df['profit'] / df['revenue']
+
+# 6. Filter rows with string condition
+df[df['department'].str.contains('Sales', case=False)]
+
+# 7. Group by and find average
+df.groupby('region')['sales'].mean()
+
+# 8. Reset index after filtering
+df = df[df['status'] == 'active'].reset_index(drop=True)
+
+# 9. Calculate cumulative sum
+df['cumulative_sales'] = df['sales'].cumsum()
+
+# 10. Drop columns not needed
+df.drop(columns=['unnecessary_col'], inplace=True)
+
+# 11. Use lambda to categorize
+df['grade'] = df['score'].apply(lambda x: 'A' if x > 90 else 'B')
+
+# 12. Reorder columns
+df = df[['name', 'score', 'grade', 'department']]
+
+# 13. Convert date string to datetime
+df['join_date'] = pd.to_datetime(df['join_date'])
+
+# 14. Extract year from datetime
+df['year'] = df['join_date'].dt.year
+
+# 15. Boolean mask on two conditions
+df[(df['region'] == 'East') & (df['sales'] > 5000)]
+
+# 16. Use query to filter
+df.query("score > 70 and department == 'HR'")
+
+# 17. Value counts for categories
+df['category'].value_counts()
+
+# 18. Apply string functions
+df['position'] = df['position'].str.title()
+
+# 19. Save filtered data
+df[df['sales'] > 10000].to_csv('high_sales.csv', index=False)
+
+# 20. Check for duplicates
+df.duplicated().sum()
+    </code></pre>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Daily Challenge Sets</h2>
+    <ul>
+      <li><strong>🟢 Easy:</strong> Extract all names starting with 'A' and count them</li>
+      <li><strong>🟡 Medium:</strong> Find average profit by category and plot a bar chart</li>
+      <li><strong>🟠 Hard:</strong> Reshape a wide-format monthly sales report into tidy long format</li>
+      <li><strong>🔴 Expert:</strong> Analyze 7-day rolling average of daily temperatures and detect anomalies over time</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <h2>📘 Drill Flow Diagram</h2>
+    <p><img src="../static/assets/img/placeholder_drill_diagram.png" alt="Daily Drill Workflow Diagram Placeholder" /></p>
+  </div>
+
+  <div class="test">
+    <h2>🧭 Mini Project: Daily Stock Data Cleaner</h2>
+    <p><strong>Goal:</strong> Build a reusable function to clean daily stock prices from CSV files, compute daily returns, and save a cleaned report.</p>
+
+    <pre><code>
+import pandas as pd
+
+# Step 1: Load CSV file
+df = pd.read_csv('daily_stock_data.csv')
+
+# Step 2: Clean column names
+df.columns = df.columns.str.strip().str.lower()
+
+# Step 3: Convert date column
+df['date'] = pd.to_datetime(df['date'])
+
+# Step 4: Sort by date
+df = df.sort_values('date')
+
+# Step 5: Calculate daily return
+df['daily_return'] = df['close'].pct_change()
+
+# Step 6: Fill any missing values
+df.fillna(0, inplace=True)
+
+# Step 7: Save cleaned version
+df.to_csv('cleaned_daily_stock_data.csv', index=False)
+    </code></pre>
+
+    <p><strong>Bonus:</strong> Extend this project to load and process <em>multiple stock files</em> using a loop and store all results in a single DataFrame.</p>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

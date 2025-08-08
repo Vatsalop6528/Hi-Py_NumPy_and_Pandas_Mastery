@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 8: Optimization Techniques in NumPy</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+
+<div class="container">
+      <h1>Chapter 8: Optimization Techniques in NumPy</h1>
+    </div>
+
+
+<main class="chapter-content container">
+
+
+  <!-- 🧠 Concept Explanations -->
+  <div class="note">
+    <h2>🧠 Concept: Why Optimize?</h2>
+    <p>Optimization helps improve speed, reduce memory usage, and scale data science solutions to large datasets or real-time applications.</p>
+  </div>
+
+  <div class="note">
+    <h2>🧠 Concept: Common Performance Bottlenecks</h2>
+    <ul>
+      <li>Python loops over arrays</li>
+      <li>Copying arrays unnecessarily</li>
+      <li>Improper use of broadcasting</li>
+      <li>Excessive temporary arrays</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <h2>🧠 Concept: Key Optimization Techniques</h2>
+    <ul>
+      <li>Use <code>vectorized</code> operations</li>
+      <li>Leverage <code>in-place</code> modifications using <code>out=</code> parameter</li>
+      <li>Use memory-efficient data types (e.g. <code>float32</code> instead of <code>float64</code>)</li>
+      <li>Reduce intermediate arrays</li>
+    </ul>
+  </div>
+
+  <!-- 📘 Diagram Placeholder -->
+  <div class="note">
+    <h2>📘 Diagram</h2>
+    <p><em>[Insert Diagram: Comparison chart of Python loop vs NumPy vectorization vs in-place]</em></p>
+  </div>
+
+  <!-- 🧪 Code Exercises -->
+  <div class="code">
+    <h2>🧪 Code Exercises</h2>
+    <pre><code>
+import numpy as np
+
+# 1. Loop vs Vectorized addition
+a = np.arange(1000000)
+b = np.arange(1000000)
+
+# Slow
+c = np.empty_like(a)
+for i in range(len(a)):
+    c[i] = a[i] + b[i]
+
+# Fast
+d = a + b
+
+# 2. In-place operations
+np.multiply(a, 2, out=a)
+
+# 3. Check array memory usage
+print(a.nbytes)
+
+# 4. Use float32 instead of float64
+arr1 = np.ones(1000000, dtype=np.float64)
+arr2 = np.ones(1000000, dtype=np.float32)
+print(arr1.nbytes, arr2.nbytes)
+
+# 5. Preallocate large result arrays
+result = np.empty((1000, 1000))
+
+# 6. Avoid creating intermediate arrays
+x = np.random.rand(1000, 1000)
+np.sqrt(np.add(x, 1, out=x), out=x)
+
+# 7. View vs Copy: check using np.shares_memory
+a = np.arange(10)
+b = a[2:6]
+print(np.shares_memory(a, b))
+
+# 8. Using np.where instead of for-loop condition
+arr = np.random.randint(0, 100, 10)
+result = np.where(arr % 2 == 0, arr // 2, arr * 3)
+
+# 9. Memory mapping for large files (Bonus)
+# np.memmap('bigfile.dat', dtype='float32', mode='w+', shape=(10000,10000))
+
+# 10. Measure time taken
+import time
+start = time.time()
+_ = a * b
+end = time.time()
+print("Vectorized time:", end - start)
+    </code></pre>
+  </div>
+
+  <!-- 💡 Challenges -->
+  <div class="challenge">
+    <h2>💡 Challenge: Easy</h2>
+    <p>Reduce memory footprint of a float64 array of 1 million elements to float32 and show memory difference.</p>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenge: Medium</h2>
+    <p>Given a 2D array, normalize each row using vectorized operations and avoid temporary arrays.</p>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenge: Hard</h2>
+    <p>Implement in-place standardization (z-score normalization) for a large array of shape (50000, 100) using only NumPy.</p>
+  </div>
+
+  <!-- 🧭 Mini Project -->
+  <div class="test">
+    <h2>🧭 Mini Project: Optimize Matrix Operations</h2>
+    <p><strong>Goal:</strong> Simulate a system that computes multiple statistical transformations on large 2D arrays efficiently.</p>
+
+    <p><strong>Steps:</strong></p>
+    <ol>
+      <li>Create a matrix of shape (10,000 x 100) with random values.</li>
+      <li>Compute row-wise mean, standard deviation, and z-score.</li>
+      <li>Apply a transformation: scale rows by their max value.</li>
+      <li>Optimize each step to avoid intermediate arrays and use in-place operations.</li>
+    </ol>
+
+    <pre><code>
+# Step 1: Generate matrix
+np.random.seed(42)
+matrix = np.random.rand(10000, 100)
+
+# Step 2: Compute row mean and std (avoid loop)
+row_mean = matrix.mean(axis=1, keepdims=True)
+row_std = matrix.std(axis=1, keepdims=True)
+
+# Step 3: Z-score normalization (vectorized)
+matrix -= row_mean
+matrix /= row_std
+
+# Step 4: Scale rows by max (in-place)
+row_max = matrix.max(axis=1, keepdims=True)
+matrix /= row_max
+
+# Final matrix is fully optimized
+print("Optimized shape:", matrix.shape)
+    </code></pre>
+
+    <p><strong>Bonus:</strong> Measure memory & time savings vs naive version.</p>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

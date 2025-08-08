@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 7: Vectorization & Broadcasting in NumPy</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+
+<div class="container">
+      <h1>Chapter 7: Vectorization & Broadcasting in NumPy</h1>
+    </div>
+
+
+<main class="chapter-content container">
+
+
+  <!-- 🧠 Concept Explanations -->
+  <div class="note">
+    <h2>🧠 Concept: What is Vectorization?</h2>
+    <p>Vectorization refers to performing operations on whole arrays (or vectors) without using explicit Python loops. It leverages NumPy's C-based backend for speed.</p>
+  </div>
+
+  <div class="note">
+    <h2>🧠 Concept: Benefits of Vectorization</h2>
+    <ul>
+      <li>Faster execution</li>
+      <li>Cleaner syntax</li>
+      <li>Less error-prone</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <h3>🧠 Concept: Broadcasting</h3>
+    <p>Broadcasting allows NumPy to work with arrays of different shapes during arithmetic operations by 'stretching' smaller arrays to match dimensions.</p>
+  </div>
+
+  <div class="note">
+    <h2>🧠 Concept: Common Vectorized Operations</h2>
+    <p>Addition, subtraction, multiplication, logical operations, comparisons, and more can be vectorized across arrays using element-wise operations.</p>
+  </div>
+
+  <div class="note">
+    <h2>🧠 Concept: Avoiding Loops</h2>
+    <p>Traditional for-loops can be replaced with NumPy vectorized operations to drastically improve performance.</p>
+  </div>
+
+  <!-- 📘 Diagram Placeholder -->
+  <div class="note">
+    <h2>📘 Diagram</h2>
+    <p><em>[Insert Diagram: Broadcasting rules + element-wise operation visualization]</em></p>
+  </div>
+
+  <!-- 🧪 Code Exercises -->
+  <div class="code">
+    <h2>🧪 Code Exercises</h2>
+    <pre><code>
+import numpy as np
+
+# 1. Create two arrays and add them element-wise
+a = np.array([1, 2, 3])
+b = np.array([4, 5, 6])
+print(a + b)
+
+# 2. Multiply every element by 2
+print(a * 2)
+
+# 3. Square each element
+print(a ** 2)
+
+# 4. Compute element-wise max
+print(np.maximum(a, b))
+
+# 5. Vectorized comparison
+print(a > 2)
+
+# 6. Apply sin() to every element
+angles = np.array([0, np.pi/2, np.pi])
+print(np.sin(angles))
+
+# 7. Broadcasting: Add scalar to matrix
+matrix = np.array([[1, 2], [3, 4]])
+print(matrix + 5)
+
+# 8. Broadcasting: Add 1D array to 2D array (row-wise)
+row = np.array([10, 20])
+print(matrix + row)
+
+# 9. Convert Celsius to Fahrenheit
+celsius = np.array([0, 20, 37, 100])
+fahrenheit = celsius * 9/5 + 32
+print(fahrenheit)
+
+# 10. Replace a loop with a vectorized version
+numbers = np.arange(1, 11)
+squares = numbers ** 2
+print(squares)
+    </code></pre>
+  </div>
+
+  <!-- 💡 Challenges -->
+  <div class="challenge">
+    <h2>💡 Challenge: Easy</h2>
+    <p>Given an array of numbers, return an array with only even numbers doubled.</p>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenge: Medium</h2>
+    <p>Broadcast a 1D array of shape (3,) across a 2D matrix of shape (4,3) and subtract it row-wise.</p>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenge: Hard</h2>
+    <p>Simulate pixel-wise image operations: apply a brightness increase to a 3D array representing an RGB image (shape: (100, 100, 3)) using broadcasting.</p>
+  </div>
+
+  <!-- 🧭 Mini Project -->
+  <div class="test">
+    <h2>🧭 Mini Project: Vectorized BMI Calculator</h2>
+    <p><strong>Goal:</strong> Calculate Body Mass Index (BMI) for 1000 individuals using NumPy vectorization.</p>
+
+    <p><strong>Step-by-step:</strong></p>
+    <ol>
+      <li>Generate 1000 random heights (in meters) and weights (in kg).</li>
+      <li>Use the formula: <code>BMI = weight / (height ** 2)</code>.</li>
+      <li>Classify as underweight, normal, overweight, or obese.</li>
+    </ol>
+
+    <pre><code>
+# Step 1: Generate synthetic data
+np.random.seed(0)
+heights = np.random.normal(1.7, 0.1, 1000)
+weights = np.random.normal(65, 15, 1000)
+
+# Step 2: Compute BMI (vectorized)
+bmi = weights / (heights ** 2)
+
+# Step 3: Categorize
+categories = np.where(bmi < 18.5, "Underweight",
+             np.where(bmi < 25, "Normal",
+             np.where(bmi < 30, "Overweight", "Obese")))
+
+# Step 4: Print stats
+print("First 10 BMIs:", bmi[:10])
+print("First 10 categories:", categories[:10])
+
+# Bonus: Count how many are in each category
+from collections import Counter
+print(Counter(categories))
+    </code></pre>
+
+    <p><strong>Bonus:</strong> Visualize BMI distribution using Matplotlib histogram (in future chapters).</p>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

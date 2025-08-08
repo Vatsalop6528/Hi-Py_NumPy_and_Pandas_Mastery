@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 20: Pandas Challenges</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+
+<div class="container">
+      <h1>Chapter 20: Pandas Challenges</h1>
+    </div>
+
+
+<main class="chapter-content container">
+
+
+
+  <div class="note">
+    <h2>🧠 Concept Overview</h2>
+    <p>This chapter focuses entirely on hands-on <strong>problem solving using Pandas</strong>. You'll apply your knowledge to tackle realistic datasets, wrangle messy data, perform advanced analysis, and derive insights. This is where theory becomes practical skill.</p>
+    <ul>
+      <li>Cleaning inconsistent, missing, and malformed data</li>
+      <li>Grouping and aggregating from multiple dimensions</li>
+      <li>Index manipulation and sorting tricks</li>
+      <li>Advanced filtering and custom logic</li>
+      <li>Combining multiple DataFrames</li>
+      <li>Visual summaries for analytical storytelling</li>
+    </ul>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercises</h2>
+    <pre><code>
+# 1. Fix column names
+df.columns = [col.strip().lower().replace(" ", "_") for col in df.columns]
+
+# 2. Fill missing values
+df['salary'].fillna(df['salary'].mean(), inplace=True)
+
+# 3. Convert column types
+df['hire_date'] = pd.to_datetime(df['hire_date'])
+
+# 4. Conditional filtering
+df[df['sales'] > 5000]
+
+# 5. Group by multiple columns
+df.groupby(['region', 'department'])['sales'].sum()
+
+# 6. Sort by multiple criteria
+df.sort_values(by=['region', 'sales'], ascending=[True, False])
+
+# 7. Drop duplicates
+df.drop_duplicates(subset=['employee_id'], keep='last')
+
+# 8. Rename columns
+df.rename(columns={'emp_id': 'employee_id'}, inplace=True)
+
+# 9. Apply custom logic
+df['bonus'] = df['sales'].apply(lambda x: x * 0.1 if x > 5000 else 0)
+
+# 10. Merge two DataFrames
+pd.merge(emp_df, dept_df, on='dept_id', how='left')
+
+# 11. Reshape with pivot
+df.pivot(index='month', columns='product', values='revenue')
+
+# 12. Calculate rolling mean
+df['revenue'].rolling(window=3).mean()
+
+# 13. Create new column from conditions
+df['category'] = np.where(df['sales'] > 5000, 'High', 'Low')
+
+# 14. Filter by string
+df[df['position'].str.contains("Manager", case=False)]
+
+# 15. Explode list column
+df.explode('skills')
+
+# 16. Multi-index filtering
+df.loc[('North', 'Sales')]
+
+# 17. Find correlation matrix
+df.corr()
+
+# 18. Value counts with normalize
+df['region'].value_counts(normalize=True)
+
+# 19. Replace bad entries
+df['gender'].replace({'M': 'Male', 'F': 'Female'}, inplace=True)
+
+# 20. Query style filtering
+df.query("region == 'West' and sales > 7000")
+    </code></pre>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenges (Easy → Hard)</h2>
+    <ul>
+      <li><strong>🟢 Easy:</strong> Clean a CSV file with inconsistent capitalization and missing values</li>
+      <li><strong>🟡 Medium:</strong> Analyze sales data to find top 3 performing products per region</li>
+      <li><strong>🟠 Hard:</strong> Merge and reshape multiple monthly employee data files, find churn rate per department</li>
+      <li><strong>🔴 Expert:</strong> Given a messy dataset with nested lists, nulls, and mixed data types, clean and visualize customer segmentation</li>
+    </ul>
+  </div>
+
+
+
+  <div class="test">
+    <h2>🧭 Mini Project: Real Estate Price Analysis</h2>
+    <p><strong>Objective:</strong> Analyze a housing dataset and find key insights such as:</p>
+    <ul>
+      <li>Average price per location</li>
+      <li>Top 5 most expensive areas</li>
+      <li>Price trend over time</li>
+      <li>Detect and handle anomalies (e.g., 0 sq ft or negative price)</li>
+    </ul>
+
+    <pre><code>
+import pandas as pd
+
+# Step 1: Load and inspect
+df = pd.read_csv('housing_data.csv')
+print(df.head())
+
+# Step 2: Clean data
+df = df[df['price'] > 0]
+df['area_sqft'] = df['area_sqft'].replace(0, df['area_sqft'].median())
+
+# Step 3: Convert date column
+df['date'] = pd.to_datetime(df['date'])
+
+# Step 4: Price per location
+avg_price = df.groupby('location')['price'].mean().sort_values(ascending=False)
+print(avg_price.head(5))
+
+# Step 5: Top 5 areas
+top5 = avg_price.head(5).index.tolist()
+top5_df = df[df['location'].isin(top5)]
+
+# Step 6: Time trend
+monthly = df.set_index('date').resample('M')['price'].mean()
+monthly.plot(title='Monthly Average House Price')
+
+# Step 7: Save cleaned dataset
+df.to_csv('cleaned_housing.csv', index=False)
+    </code></pre>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

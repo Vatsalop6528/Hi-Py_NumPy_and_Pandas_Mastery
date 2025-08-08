@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 15: Multi-Indexing in Pandas</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+
+<div class="container">
+      <h1>Chapter 15: Multi-Indexing in Pandas</h1>
+    </div>
+
+
+<main class="chapter-content container">
+
+
+
+  <div class="note">
+    <p><strong>🧠 Concept:</strong> Multi-indexing (Hierarchical Indexing) allows multiple (two or more) index levels on rows and/or columns. It enables advanced data alignment, slicing, and grouping in Pandas.</p>
+    <ul>
+      <li><strong>MultiIndex:</strong> A way to store multiple index levels.</li>
+      <li><strong>Creation:</strong> Can be created from arrays, tuples, or during groupby operations.</li>
+      <li><strong>Indexing:</strong> Use <code>.loc</code>, <code>.xs()</code>, or <code>.index.get_level_values()</code> for access.</li>
+      <li><strong>Unstacking/Stacking:</strong> Convert levels into columns or vice versa.</li>
+      <li><strong>Sorting & Naming:</strong> Use <code>sort_index()</code> and <code>rename_axis()</code>.</li>
+    </ul>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercises</h2>
+    <pre><code>
+import pandas as pd
+import numpy as np
+
+# 1. Create MultiIndex from tuples
+index = pd.MultiIndex.from_tuples([
+    ('Math', 2023), ('Math', 2024),
+    ('Science', 2023), ('Science', 2024)
+], names=['Subject', 'Year'])
+
+data = pd.Series([87, 90, 78, 85], index=index)
+print(data)
+
+# 2. Access data for 'Math'
+print(data.loc['Math'])
+
+# 3. Access specific year
+print(data.loc[('Science', 2024)])
+
+# 4. Use xs (cross-section)
+print(data.xs(2023, level='Year'))
+
+# 5. Convert to DataFrame
+df = data.unstack()
+print(df)
+
+# 6. Stack back to Series
+print(df.stack())
+
+# 7. Reset index
+print(data.reset_index())
+
+# 8. Set multi-index on new DataFrame
+df2 = pd.DataFrame({
+    'Region': ['East', 'East', 'West', 'West'],
+    'Year': [2023, 2024, 2023, 2024],
+    'Sales': [100, 120, 90, 110]
+})
+df2.set_index(['Region', 'Year'], inplace=True)
+print(df2)
+
+# 9. Index level names
+print(df2.index.names)
+
+# 10. Sort by index
+print(df2.sort_index())
+
+# 11. Access by tuple
+print(df2.loc[('East', 2023)])
+
+# 12. Get level values
+print(df2.index.get_level_values(0))
+
+# 13. Add another column and unstack
+df2['Profit'] = [20, 25, 15, 18]
+print(df2.unstack())
+
+# 14. Swap index levels
+print(df2.swaplevel())
+
+# 15. Slice multi-index
+idx = pd.IndexSlice
+print(df2.loc[idx[:, 2023], :])
+    </code></pre>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenges</h2>
+    <ul>
+      <li><strong>Easy:</strong> Create a multi-index series using two levels (e.g., department and year) and print subgroups.</li>
+      <li><strong>Medium:</strong> Stack and unstack a DataFrame, then access a specific value using <code>.loc</code> and <code>.xs()</code>.</li>
+      <li><strong>Hard:</strong> Build a 3-level index (e.g., Country → State → City) and extract data based on middle-level slicing.</li>
+    </ul>
+  </div>
+
+
+
+  <div class="test">
+    <h2>🧭 Mini Project: Regional Sales Dashboard (MultiIndex)</h2>
+    <p><strong>Objective:</strong> Build a multi-index DataFrame showing quarterly sales and profit data for multiple regions and years. Analyze using hierarchical indexing features.</p>
+    <ol>
+      <li>Create a DataFrame with columns: <code>Region, Year, Quarter, Sales, Profit</code>.</li>
+      <li>Set <code>Region, Year, Quarter</code> as multi-index.</li>
+      <li>Use <code>unstack()</code> and <code>xs()</code> to explore data.</li>
+      <li>Calculate yearly totals per region using <code>groupby()</code>.</li>
+      <li>Swap levels and sort the index.</li>
+    </ol>
+
+    <pre><code>
+import pandas as pd
+
+# Step 1: Build data
+data = {
+    'Region': ['North', 'North', 'North', 'South', 'South', 'South'],
+    'Year': [2023, 2023, 2023, 2023, 2023, 2023],
+    'Quarter': ['Q1', 'Q2', 'Q3', 'Q1', 'Q2', 'Q3'],
+    'Sales': [250, 300, 280, 220, 260, 240],
+    'Profit': [50, 60, 55, 40, 45, 43]
+}
+
+df = pd.DataFrame(data)
+
+# Step 2: Set multi-index
+df.set_index(['Region', 'Year', 'Quarter'], inplace=True)
+
+# Step 3: View unstacked view
+print(df.unstack())
+
+# Step 4: Total sales per region per year
+print(df.groupby(level=['Region', 'Year'])['Sales'].sum())
+
+# Step 5: Swap and sort index
+print(df.swaplevel(0, 2).sort_index())
+    </code></pre>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

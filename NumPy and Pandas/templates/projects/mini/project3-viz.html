@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Mini Project 3: Data Visualization Focus</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f7f9;
+            padding: 40px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+        }
+
+        pre {
+            background-color: #eef2f5;
+            border-left: 4px solid #8e44ad;
+            padding: 15px;
+            overflow-x: auto;
+            border-radius: 5px;
+        }
+
+        ul {
+            background-color: #fefefe;
+            padding: 20px;
+            border-radius: 5px;
+            list-style-type: disc;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .solution {
+            background-color: #f5eef8;
+            padding: 15px;
+            border-left: 4px solid #9b59b6;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .toggle-button {
+            display: inline-block;
+            background-color: #9b59b6;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mini Project 3: Data Visualization Focus</h1>
+
+    <div class="section">
+        <h2>🎨 Introduction</h2>
+        <p>
+            In this project, your main focus is to create visualizations that reveal insights from data.
+            You'll clean the data briefly but spend most of your time building informative and beautiful plots using
+            <strong>Matplotlib</strong> and <strong>Seaborn</strong>.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>🧾 Task List</h2>
+        <ul>
+            <li>Load a real-world dataset (e.g., student scores, ecommerce, weather, etc.)</li>
+            <li>Clean basic issues like missing values</li>
+            <li>Use Seaborn/Matplotlib to create the following:
+                <ul>
+                    <li>Histogram for distribution</li>
+                    <li>Box plot for outlier detection</li>
+                    <li>Bar plot for categorical comparisons</li>
+                    <li>Line plot for trends</li>
+                    <li>Scatter plot for relationships</li>
+                    <li>Heatmap for correlation</li>
+                </ul>
+            </li>
+            <li>Label your plots clearly and use color themes</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>💡 Sample Code Blocks</h2>
+
+        <h3>1. Import and Load</h3>
+        <pre><code>import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df = pd.read_csv("data.csv")</code></pre>
+
+        <h3>2. Minimal Cleaning</h3>
+        <pre><code>df = df.dropna()
+df['score'] = pd.to_numeric(df['score'], errors='coerce')</code></pre>
+
+        <h3>3. Histogram: Distribution</h3>
+        <pre><code>sns.histplot(df['score'], kde=True, color='purple')
+plt.title("Score Distribution")
+plt.xlabel("Score")
+plt.ylabel("Count")
+plt.show()</code></pre>
+
+        <h3>4. Boxplot: Outlier Detection</h3>
+        <pre><code>sns.boxplot(x='gender', y='score', data=df, palette='pastel')
+plt.title("Scores by Gender")
+plt.show()</code></pre>
+
+        <h3>5. Scatter Plot: Relationship</h3>
+        <pre><code>sns.scatterplot(x='hours_studied', y='score', hue='gender', data=df)
+plt.title("Hours Studied vs Score")
+plt.show()</code></pre>
+
+        <h3>6. Correlation Heatmap</h3>
+        <pre><code>plt.figure(figsize=(8, 6))
+sns.heatmap(df.corr(), annot=True, cmap='coolwarm')
+plt.title("Feature Correlation")
+plt.show()</code></pre>
+    </div>
+
+    <div class="section">
+        <h2>✅ Final Visualization Code (Hidden)</h2>
+        <button class="toggle-button" onclick="toggleSolution()">Show/Hide Solution</button>
+        <div class="solution" id="solution-block">
+            <pre><code>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load and clean
+df = pd.read_csv("students.csv")
+df = df.dropna()
+df['score'] = pd.to_numeric(df['score'], errors='coerce')
+df['hours_studied'] = pd.to_numeric(df['hours_studied'], errors='coerce')
+
+# Histogram
+sns.histplot(df['score'], kde=True, bins=15, color='skyblue')
+plt.title("Score Distribution")
+plt.xlabel("Score")
+plt.ylabel("Frequency")
+plt.grid(True)
+plt.show()
+
+# Boxplot
+sns.boxplot(x='gender', y='score', data=df, palette='Set2')
+plt.title("Score Distribution by Gender")
+plt.show()
+
+# Scatter Plot
+sns.scatterplot(x='hours_studied', y='score', hue='gender', data=df)
+plt.title("Hours Studied vs Score")
+plt.xlabel("Hours Studied")
+plt.ylabel("Score")
+plt.grid(True)
+plt.show()
+
+# Line Plot: (if time series exists)
+# sns.lineplot(x='date', y='score', data=df)
+
+# Correlation Heatmap
+plt.figure(figsize=(10, 6))
+sns.heatmap(df.corr(), annot=True, cmap='coolwarm', linewidths=0.5)
+plt.title("Correlation Heatmap")
+plt.show()</code></pre>
+        </div>
+    </div>
+
+    <script>
+        function toggleSolution() {
+            var sol = document.getElementById('solution-block');
+            sol.style.display = sol.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>

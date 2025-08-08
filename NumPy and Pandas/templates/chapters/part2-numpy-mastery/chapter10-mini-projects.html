@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 10: Mini Projects with NumPy</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+
+<div class="container">
+      <h1>Chapter 10: Mini Projects with NumPy</h1>
+    </div>
+
+
+<main class="chapter-content container">
+
+
+  <p class="note">
+    <strong>Note:</strong> Mini projects combine real-world scenarios with NumPy problem-solving. Each project enhances your analytical and vectorized thinking.
+  </p>
+
+  <h2>🧠 Key Concepts</h2>
+  <ul>
+    <li>Applying NumPy in real-world tasks</li>
+    <li>Data cleaning, transformation, and visualization</li>
+    <li>Handling large arrays efficiently</li>
+    <li>Performance tuning for simulations</li>
+  </ul>
+
+
+  <h2>🧪 Code Exercises</h2>
+  <div class="code">
+    <pre><code># 1. Normalize a dataset
+import numpy as np
+data = np.random.randint(0, 100, size=50)
+normalized = (data - data.min()) / (data.max() - data.min())
+print(normalized)</code></pre>
+  </div>
+
+  <div class="code">
+    <pre><code># 2. Detect outliers using Z-score
+z_scores = (data - np.mean(data)) / np.std(data)
+outliers = data[np.abs(z_scores) > 2]
+print("Outliers:", outliers)</code></pre>
+  </div>
+
+  <!-- Add more exercises similarly -->
+
+  <h2>💡 Challenges</h2>
+
+  <div class="challenge easy">
+    <strong>Easy:</strong> Calculate the moving average of a 1D array using NumPy.
+  </div>
+
+  <div class="challenge medium">
+    <strong>Medium:</strong> Simulate dice rolls and analyze the probability distribution.
+  </div>
+
+  <div class="challenge hard">
+    <strong>Hard:</strong> Build a real-time anomaly detection system using NumPy arrays only (no pandas).
+  </div>
+
+  <h2>🧭 Mini Project: NumPy Weather Analyzer 🌦️</h2>
+
+  <p><strong>Problem:</strong> Build a tool that analyzes weather data for a fictional city over a year and outputs insights.</p>
+
+  <div class="step">
+    <strong>Step 1:</strong> Generate synthetic weather data
+    <div class="code">
+      <pre><code>days = 365
+temperature = np.random.normal(loc=25, scale=5, size=days)
+rainfall = np.random.binomial(1, 0.3, size=days) * np.random.uniform(0, 50, size=days)</code></pre>
+    </div>
+  </div>
+
+  <div class="step">
+    <strong>Step 2:</strong> Identify hottest and coldest weeks
+    <div class="code">
+      <pre><code>week_temps = temperature.reshape(-1, 7)
+weekly_avg = week_temps.mean(axis=1)
+hottest_week = np.argmax(weekly_avg)
+coldest_week = np.argmin(weekly_avg)</code></pre>
+    </div>
+  </div>
+
+  <div class="step">
+    <strong>Step 3:</strong> Calculate total rainfall and rainy days
+    <div class="code">
+      <pre><code>total_rainfall = rainfall.sum()
+rainy_days = np.count_nonzero(rainfall)</code></pre>
+    </div>
+  </div>
+
+  <div class="test">
+    <strong>Test:</strong> Ensure weekly averages match expected size (should be 52 weeks)
+    <pre><code>assert len(weekly_avg) == 52</code></pre>
+  </div>
+
+  <div class="note">
+    <strong>Tip:</strong> Try visualizing weekly temperature trends using matplotlib after this chapter.
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 27: Data Engineering Projects with Pandas</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+
+<div class="container">
+      <h1>Chapter 27: Data Engineering Projects with Pandas</h1>
+    </div>
+
+<main class="chapter-content container">
+
+
+
+  <div class="note">
+    <h2>🧠 Concept: Data Engineering with Pandas</h2>
+    <p>Data Engineering involves building systems and pipelines to collect, clean, transform, and load data efficiently. Pandas plays a vital role in prototyping ETL (Extract, Transform, Load) processes for data platforms.</p>
+  </div>
+
+  <div class="note">
+    <h2>📘 Diagram: ETL Pipeline Flow</h2>
+    <p><img src="/static/assets/images/placeholder-etl-diagram.jpg" alt="ETL Pipeline Diagram" /></p>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercise 1: Read Raw CSV and Inspect</h2>
+    <pre><code>import pandas as pd
+
+raw_df = pd.read_csv("data/users_raw.csv")
+print(raw_df.info())
+print(raw_df.head())</code></pre>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercise 2: Clean Column Names</h2>
+    <pre><code># Normalize column names
+raw_df.columns = raw_df.columns.str.strip().str.lower().str.replace(' ', '_')</code></pre>
+  </div>
+
+  <div class="test">
+    <h2>✅ Test Your Understanding</h2>
+    <p>Which method removes duplicate rows in a Pandas DataFrame?</p>
+    <ul>
+      <li>A) <code>df.clear_duplicates()</code></li>
+      <li>B) <code>df.remove_duplicates()</code></li>
+      <li>C) <code>df.drop_duplicates()</code></li>
+    </ul>
+    <p><strong>Correct:</strong> C</p>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercise 3: Remove Duplicates</h2>
+    <pre><code>clean_df = raw_df.drop_duplicates()</code></pre>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercise 4: Handle Missing Values</h2>
+    <pre><code>clean_df["email"].fillna("unknown@example.com", inplace=True)</code></pre>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercise 5: Write Clean Data to File</h2>
+    <pre><code>clean_df.to_csv("data/users_clean.csv", index=False)</code></pre>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenge 1: Product Catalog Cleaning</h2>
+    <p>Clean <code>products_raw.csv</code>: fix column names, fill missing prices, drop invalid rows (e.g., negative stock).</p>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenge 2: Normalize User Events</h2>
+    <p>From <code>user_events.csv</code>, create a structured table of user activity with datetime parsing and deduplication.</p>
+  </div>
+
+  <div class="note">
+    <h2>🧠 Concept: Data Transformation</h2>
+    <p>Transformations prepare data for analysis or downstream pipelines — filtering, aggregating, joining, reshaping.</p>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercise 6: Convert JSON to Table</h2>
+    <pre><code>import json
+
+with open("data/transactions.json") as f:
+    data = json.load(f)
+
+df = pd.json_normalize(data)</code></pre>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercise 7: Merge Two DataFrames</h2>
+    <pre><code>users = pd.read_csv("data/users.csv")
+orders = pd.read_csv("data/orders.csv")
+
+merged = pd.merge(users, orders, on="user_id", how="inner")</code></pre>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenge 3 (Medium): Region-wise Aggregation</h2>
+    <p>Group sales data by region, and calculate total sales, average order value, and top-performing region.</p>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenge 4 (Hard): Flatten Nested JSONs</h2>
+    <p>Parse a deeply nested <code>analytics.json</code> file and flatten all relevant fields into a tidy DataFrame.</p>
+  </div>
+
+  <div class="note">
+    <h2>🧭 Mini Project: Build an ETL Pipeline for Online Store</h2>
+    <p>You’re hired as a junior data engineer for an e-commerce platform. Your task is to clean raw files and build a working ETL prototype using Pandas.</p>
+    <ul>
+      <li>🗃️ Load raw users and orders</li>
+      <li>🧹 Clean both datasets (missing, malformed data)</li>
+      <li>🔗 Merge on user_id</li>
+      <li>📊 Calculate KPIs like Total Orders, Avg Value</li>
+      <li>📤 Save output to <code>cleaned_store_data.csv</code></li>
+    </ul>
+  </div>
+
+  <div class="code">
+    <h2>💡 Step 1: Load Raw Files</h2>
+    <pre><code>users = pd.read_csv("data/users_raw.csv")
+orders = pd.read_csv("data/orders_raw.csv")</code></pre>
+  </div>
+
+  <div class="code">
+    <h2>💡 Step 2: Clean and Merge</h2>
+    <pre><code># Basic cleaning
+users.dropna(subset=["email"], inplace=True)
+orders["amount"] = orders["amount"].fillna(0)
+
+# Merge datasets
+combined = pd.merge(users, orders, on="user_id")</code></pre>
+  </div>
+
+  <div class="code">
+    <h2>💡 Step 3: KPI Calculation + Export</h2>
+    <pre><code>kpis = combined.groupby("user_id").agg({
+    "order_id": "count",
+    "amount": "mean"
+}).rename(columns={"order_id": "total_orders", "amount": "avg_order_value"})
+
+kpis.to_csv("output/store_kpis.csv")</code></pre>
+  </div>
+
+  <div class="note">
+    <h2>✅ Summary</h2>
+    <p>You've now explored how Pandas can power lightweight ETL pipelines, normalize unstructured data, and transform raw data into clean, actionable formats.</p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

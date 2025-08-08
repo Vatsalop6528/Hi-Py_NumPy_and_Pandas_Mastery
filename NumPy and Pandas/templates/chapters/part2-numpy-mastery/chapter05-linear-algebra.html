@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 5: Linear Algebra with NumPy</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+
+<div class="container">
+      <h1>Chapter 5: Linear Algebra with NumPy</h1>
+    </div>
+
+
+<main class="chapter-content container">
+
+
+  <!-- 🧠 Concept Explanations -->
+  <div class="note">
+    <h2>🧠 Concept: What is Linear Algebra?</h2>
+    <p>Linear Algebra is the branch of mathematics that deals with vectors, matrices, and linear transformations. NumPy provides the <code>numpy.linalg</code> module to perform advanced linear algebra operations efficiently.</p>
+  </div>
+
+  <div class="note">
+    <h2>🧠 Concept: Matrix Multiplication</h2>
+    <p>Matrix multiplication is performed using <code>np.dot()</code>, <code>np.matmul()</code>, or the <code>@</code> operator. Remember, it's not element-wise multiplication.</p>
+  </div>
+
+  <div class="note">
+    <h2>🧠 Concept: Transpose and Inverse</h2>
+    <p>Transpose is done using <code>.T</code>. Inverse is found with <code>np.linalg.inv()</code>, but it only works for square, non-singular matrices.</p>
+  </div>
+
+  <div class="note">
+    <h2>🧠 Concept: Determinant & Rank</h2>
+    <p>Use <code>np.linalg.det()</code> to compute the determinant and <code>np.linalg.matrix_rank()</code> for rank. These help understand matrix properties and solvability.</p>
+  </div>
+
+  <div class="note">
+    <h2>🧠 Concept: Solving Linear Systems</h2>
+    <p>To solve equations like Ax = b, use <code>np.linalg.solve(A, b)</code> where A is the coefficient matrix and b is the result vector.</p>
+  </div>
+
+  <div class="note">
+    <h2>🧠 Concept: Eigenvalues & Eigenvectors</h2>
+    <p>Use <code>np.linalg.eig()</code> to find eigenvalues and eigenvectors. These are crucial in PCA, physics, and systems modeling.</p>
+  </div>
+
+  <!-- 📘 Diagram Placeholder -->
+  <div class="note">
+    <h2>📘 Diagram</h2>
+    <p><em>[Insert Diagram: Matrix multiplication visual, determinant geometry, eigenvector direction]</em></p>
+  </div>
+
+  <!-- 🧪 Code Exercises -->
+  <div class="code">
+    <h2>🧪 Practice Exercises</h2>
+    <pre><code>
+# 1. Create 2x2 matrix
+A = np.array([[2, 3], [1, 4]])
+
+# 2. Matrix transpose
+print(A.T)
+
+# 3. Dot product of vectors
+v1 = np.array([1, 2])
+v2 = np.array([3, 4])
+print(np.dot(v1, v2))
+
+# 4. Matrix multiplication
+B = np.array([[5, 1], [2, 2]])
+print(np.matmul(A, B))
+
+# 5. Matrix inverse
+print(np.linalg.inv(A))
+
+# 6. Check identity property
+inv = np.linalg.inv(A)
+print(np.round(A @ inv, 2))  # Should be identity
+
+# 7. Determinant
+print(np.linalg.det(A))
+
+# 8. Rank of a matrix
+print(np.linalg.matrix_rank(A))
+
+# 9. Eigenvalues and eigenvectors
+eigenvalues, eigenvectors = np.linalg.eig(A)
+print("Eigenvalues:", eigenvalues)
+print("Eigenvectors:", eigenvectors)
+
+# 10. Solve system of equations: Ax = b
+b = np.array([5, 6])
+x = np.linalg.solve(A, b)
+print("Solution:", x)
+
+# Add 5–10 more for practice: null matrices, singular check, symmetric matrices, etc.
+    </code></pre>
+  </div>
+
+  <!-- 💡 Challenges -->
+  <div class="challenge">
+    <h2>💡 Challenge: Easy</h2>
+    <p>Create a 3x3 matrix and calculate its transpose, determinant, and rank.</p>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenge: Medium</h2>
+    <p>Solve a system of three linear equations using <code>np.linalg.solve()</code>. Verify the solution using matrix multiplication.</p>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenge: Hard</h2>
+    <p>Write a function that takes any square matrix and checks whether it's diagonalizable by computing eigenvalues and comparing rank of eigenvectors.</p>
+  </div>
+
+  <!-- 🧭 Mini Project -->
+  <div class="test">
+    <h2>🧭 Mini Project: Linear System Solver GUI (Console Version)</h2>
+    <p><strong>Goal:</strong> Build a command-line tool to input any 2x2 or 3x3 system of equations and solve it using NumPy.</p>
+
+    <p><strong>Steps:</strong></p>
+    <ol>
+      <li>Ask user to input matrix A (2x2 or 3x3) and vector b.</li>
+      <li>Check if <code>A</code> is square and invertible.</li>
+      <li>Use <code>np.linalg.solve()</code> to find the solution.</li>
+      <li>Print results in a readable format.</li>
+    </ol>
+
+    <pre><code>
+# Mini project: Simple solver for Ax = b
+
+A = np.array([[2, 1], [5, 3]])
+b = np.array([8, 18])
+
+try:
+    x = np.linalg.solve(A, b)
+    print("Solution vector x:")
+    print(x)
+except np.linalg.LinAlgError:
+    print("Matrix is not invertible.")
+    </code></pre>
+
+    <p><strong>Bonus:</strong> Let the user input values via <code>input()</code> and convert to NumPy arrays.</p>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

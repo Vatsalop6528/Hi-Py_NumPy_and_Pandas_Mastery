@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>Chapter 18: Pivoting and Reshaping Data in Pandas</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+
+<div class="container">
+      <h1>Chapter 18: Pivoting and Reshaping Data in Pandas</h1>
+    </div>
+
+
+<main class="chapter-content container">
+
+
+  <div class="note">
+    <h2>🧠 Concept Overview</h2>
+    <p>Pandas offers powerful reshaping tools to transform data into more usable formats for analysis:</p>
+    <ul>
+      <li><strong><code>pivot()</code></strong>: Rearranges data based on index/columns/values (used when data is already well-structured).</li>
+      <li><strong><code>pivot_table()</code></strong>: Like <code>pivot()</code> but allows aggregation with <code>aggfunc</code> (default is mean).</li>
+      <li><strong><code>melt()</code></strong>: Unpivots columns into rows (long-form format).</li>
+      <li><strong><code>stack()</code> & <code>unstack()</code></strong>: Reshape index levels (MultiIndex).</li>
+      <li><strong><code>wide_to_long()</code></strong>: Specialized reshaping from wide to long format with pattern matching.</li>
+    </ul>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercises</h2>
+    <pre><code>
+import pandas as pd
+
+# 1. Create DataFrame
+df = pd.DataFrame({
+    'Date': ['2024-01', '2024-01', '2024-02', '2024-02'],
+    'Product': ['A', 'B', 'A', 'B'],
+    'Sales': [250, 300, 270, 310]
+})
+
+# 2. Pivot
+pivoted = df.pivot(index='Date', columns='Product', values='Sales')
+print(pivoted)
+
+# 3. Pivot Table with aggregation
+df2 = pd.DataFrame({
+    'Dept': ['HR', 'HR', 'IT', 'IT'],
+    'Gender': ['F', 'M', 'F', 'M'],
+    'Salary': [40000, 42000, 45000, 47000]
+})
+pt = pd.pivot_table(df2, index='Dept', columns='Gender', values='Salary', aggfunc='mean')
+print(pt)
+
+# 4. Melt (unpivot)
+df3 = pd.DataFrame({
+    'ID': [1, 2],
+    'Math': [85, 90],
+    'Science': [88, 92]
+})
+melted = pd.melt(df3, id_vars='ID', var_name='Subject', value_name='Marks')
+print(melted)
+
+# 5. Stack and Unstack
+df4 = df2.pivot(index='Dept', columns='Gender', values='Salary')
+stacked = df4.stack()
+print(stacked)
+unstacked = stacked.unstack()
+print(unstacked)
+
+# 6. MultiIndex unstack
+multi = df4.stack().unstack(level=0)
+print(multi)
+
+# 7. Melt with multiple id_vars
+df4 = pd.DataFrame({
+    'Name': ['Alice', 'Bob'],
+    'Age': [25, 30],
+    'Score1': [85, 88],
+    'Score2': [90, 92]
+})
+print(pd.melt(df4, id_vars=['Name', 'Age'], var_name='Test', value_name='Score'))
+
+# 8. Use pivot_table with multiple aggregations
+print(pd.pivot_table(df2, index='Dept', aggfunc={'Salary': ['mean', 'max']}))
+
+# 9. Use margins in pivot_table
+print(pd.pivot_table(df2, index='Dept', columns='Gender', values='Salary', margins=True))
+
+# 10. wide_to_long format
+wide_df = pd.DataFrame({
+    'id': [1, 2],
+    'year': [2020, 2020],
+    'score_math': [90, 85],
+    'score_eng': [80, 75]
+})
+long_df = pd.wide_to_long(wide_df, stubnames='score', i='id', j='subject', sep='_', suffix='\\w+')
+print(long_df.reset_index())
+    </code></pre>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenges</h2>
+    <ul>
+      <li><strong>Easy:</strong> Create a pivot table of employee salaries grouped by department and gender.</li>
+      <li><strong>Medium:</strong> Unpivot a dataset containing scores across multiple subjects into long-form.</li>
+      <li><strong>Hard:</strong> Given a messy dataset with repeated index values, reshape it using <code>pivot_table</code> with multiple aggregations and margins enabled.</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <h2>📘 Diagram</h2>
+    <p><img src="/static/assets/images/placeholder_pivot_reshape_diagram.png" alt="Pivot Reshape Diagram Placeholder" /></p>
+  </div>
+
+  <div class="test">
+    <h2>🧭 Mini Project: Student Performance Analysis</h2>
+    <p><strong>Goal:</strong> Transform and analyze student scores using pivot, melt, and aggregation tools.</p>
+
+    <ol>
+      <li>Create a DataFrame with student IDs and scores in Math, Science, and English.</li>
+      <li>Melt it into a long format with subject-wise marks.</li>
+      <li>Calculate the average score per subject using <code>pivot_table</code>.</li>
+      <li>Convert it back to a wide format using <code>pivot()</code>.</li>
+      <li>Use <code>wide_to_long()</code> to extract repeated test scores over years.</li>
+    </ol>
+
+    <pre><code>
+# Step 1: Raw Data
+df = pd.DataFrame({
+    'StudentID': [101, 102, 103],
+    'Math': [88, 92, 85],
+    'Science': [90, 85, 87],
+    'English': [75, 80, 78]
+})
+
+# Step 2: Melt to long format
+long_df = pd.melt(df, id_vars='StudentID', var_name='Subject', value_name='Marks')
+print(long_df)
+
+# Step 3: Pivot table with mean scores
+pivot_table = pd.pivot_table(long_df, index='Subject', values='Marks', aggfunc='mean')
+print(pivot_table)
+
+# Step 4: Pivot back to wide
+wide = long_df.pivot(index='StudentID', columns='Subject', values='Marks')
+print(wide)
+
+# Step 5: Simulate wide to long across years
+wide2 = pd.DataFrame({
+    'id': [1, 2],
+    'year': [2020, 2020],
+    'marks_math_1': [85, 88],
+    'marks_math_2': [87, 89],
+    'marks_sci_1': [90, 91],
+    'marks_sci_2': [88, 92]
+})
+
+reshaped = pd.wide_to_long(wide2, stubnames=['marks_math', 'marks_sci'],
+                           i='id', j='term', sep='_', suffix='\\d+')
+print(reshaped.reset_index())
+    </code></pre>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

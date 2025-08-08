@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter 1: Introduction to NumPy</title>
+
+  <!-- Fonts & CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style/main.css" />
+
+</head>
+<body>
+
+  <!-- 🧠 CHAPTER TITLE -->
+
+  <!-- <header class="chapter-header gradient">
+    <div class="container">
+      <h1>Chapter 1: Introduction to NumPy</h1>
+      <p class="subtitle">Mastering the core library for numerical computing in Python</p>
+    </div>
+  </header>
+  -->
+  <script src="/js/main.js" defer></script>
+
+  {% include 'components/header.html' %}
+
+
+  <div class="container">
+      <h1>Chapter 1: Introduction to NumPy</h1>
+      <p class="subtitle">Mastering the core library for numerical computing in Python</p>
+    </div>
+
+
+  <main class="chapter-content container">
+
+    <!-- 🔍 Concept Explanation -->
+    <section class="section">
+      <h2>🧠 What is NumPy?</h2>
+      <p>NumPy (Numerical Python) is the foundational package for performing scientific computing with Python. It enables fast mathematical operations on large arrays and matrices and supports advanced operations like broadcasting, reshaping, vectorization, and linear algebra.</p>
+
+      <div class="note">
+        <strong>Note:</strong> NumPy is often the first library used in the data science stack and underpins many others like Pandas, SciPy, scikit-learn, and TensorFlow.
+      </div>
+
+      <div class="note">
+        <h2>📘 Diagrams</h2>
+        <p><img src="/static/assets/images/numpy-architecture-placeholder.png" style="width: 900px; height: 450px" alt="NumPy Architecture Diagram" /></p>
+
+        <p class="caption">Figure: NumPy’s role in the Python data ecosystem (placeholder)</p>
+
+      </div>
+
+    </section>
+
+    <!-- 🧪 Code Exercises -->
+    <section class="section">
+      <h2>🧪 Let's Code: First 10 Exercises</h2>
+
+      <div class="code">
+        <p><strong>Exercise 1:</strong> Import NumPy and create a simple array</p>
+        <pre><code>import numpy as np
+arr = np.array([1, 2, 3])
+print(arr)</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 2:</strong> Create a 2D matrix (3x3) with numbers 1 to 9</p>
+        <pre><code>matrix = np.array([[1,2,3],[4,5,6],[7,8,9]])</code></pre>
+      </div>
+
+      <!-- Add more code blocks (3–10) similarly -->
+      <div class="code">
+        <p><strong>Exercise 3:</strong> Generate a range of numbers from 0 to 10</p>
+        <pre><code>np.arange(0, 11)</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 4:</strong> Create an array of 10 zeros</p>
+        <pre><code>np.zeros(10)</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 5:</strong> Create an array of 10 ones</p>
+        <pre><code>np.ones(10)</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 6:</strong> Create a 5x5 identity matrix</p>
+        <pre><code>np.eye(5)</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 7:</strong> Generate 5 random numbers between 0 and 1</p>
+        <pre><code>np.random.rand(5)</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 8:</strong> Generate 5 random integers between 1 and 100</p>
+        <pre><code>np.random.randint(1, 100, 5)</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 9:</strong> Reshape an array of 9 numbers into 3x3</p>
+        <pre><code>arr = np.arange(9).reshape(3,3)</code></pre>
+      </div>
+
+      <div class="code">
+        <p><strong>Exercise 10:</strong> Find the maximum value in an array</p>
+        <pre><code>arr.max()</code></pre>
+      </div>
+    </section>
+
+    <!-- 💡 Challenges -->
+    <section class="section">
+      <h2>💡 Challenges</h2>
+
+      <div class="challenge easy">
+        <strong>Easy:</strong> Create a 1D array of even numbers from 2 to 20.
+      </div>
+
+      <div class="challenge medium">
+        <strong>Medium:</strong> Create a 5x5 matrix with random integers and replace all even numbers with 0.
+      </div>
+
+      <div class="challenge hard">
+        <strong>Hard:</strong> Generate a 10x10 matrix and calculate the mean of each row and column using NumPy.
+      </div>
+    </section>
+
+    <!-- 🧭 Mini Project -->
+    <section class="section">
+      <h2>🧭 Mini Project: Grade Analyzer</h2>
+      <p>Use NumPy to build a simple grade analyzer that takes in scores for students and calculates useful statistics.</p>
+
+      <div class="test">
+        <strong>Step 1:</strong> Create a 2D NumPy array of student scores (5 students, 4 subjects)<br />
+        <code>grades = np.array([[89, 92, 85, 78], [76, 88, 90, 95], [67, 72, 70, 60], [90, 91, 85, 88], [79, 80, 78, 85]])</code>
+      </div>
+
+      <div class="test">
+        <strong>Step 2:</strong> Calculate average score for each student<br />
+        <code>np.mean(grades, axis=1)</code>
+      </div>
+
+      <div class="test">
+        <strong>Step 3:</strong> Calculate average score for each subject<br />
+        <code>np.mean(grades, axis=0)</code>
+      </div>
+
+      <div class="test">
+        <strong>Step 4:</strong> Identify the top scorer<br />
+        <code>np.argmax(np.mean(grades, axis=1))</code>
+      </div>
+
+      <div class="note">
+        <strong>Tip:</strong> Try adding bonus marks and observe how it affects averages using broadcasting!
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 🔻 FOOTER -->
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

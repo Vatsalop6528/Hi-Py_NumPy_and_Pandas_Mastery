@@ -1,0 +1,116 @@
+/* ===== Base Layout ===== */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #e0f7fa, #e1bee7);
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+
+/* ===== Main Container ===== */
+.quiz-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 20px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  border: 3px solid #f48fb1;
+  transition: transform 0.3s;
+}
+
+.quiz-container:hover {
+  transform: scale(1.01);
+}
+
+/* ===== Title ===== */
+h1 {
+  text-align: center;
+  color: #6a1b9a;
+  font-size: 2.8em;
+  margin-bottom: 30px;
+  background: linear-gradient(to right, #ab47bc, #42a5f5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===== Question Cards ===== */
+.question {
+  margin-bottom: 25px;
+  padding: 25px;
+  background: #f3e5f5;
+  border-left: 6px solid #42a5f5;
+  border-radius: 12px;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.05);
+}
+
+.question:hover {
+  background: #e1f5fe;
+  box-shadow: 0 8px 16px rgba(66, 165, 245, 0.2);
+}
+
+/* ===== Question Text ===== */
+.question p {
+  font-weight: 700;
+  font-size: 1.2em;
+  color: #4527a0;
+  margin-bottom: 15px;
+}
+
+/* ===== Option Labels ===== */
+.question label {
+  display: block;
+  padding: 10px 14px;
+  margin: 8px 0;
+  background: #fff3e0;
+  border: 2px solid #ffe0b2;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-weight: 500;
+}
+
+.question label:hover {
+  background: #ffe082;
+  border-color: #ffca28;
+}
+
+/* ===== Radio Buttons ===== */
+input[type="radio"] {
+  margin-right: 12px;
+  accent-color: #42a5f5;
+}
+
+/* ===== Submit Button ===== */
+button {
+  display: block;
+  margin: 40px auto 20px;
+  padding: 14px 28px;
+  font-size: 18px;
+  background: linear-gradient(to right, #66bb6a, #43a047);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+  transition: background 0.3s ease, transform 0.2s;
+}
+
+button:hover {
+  background: linear-gradient(to right, #81c784, #388e3c);
+  transform: translateY(-2px);
+}
+
+/* ===== Result Box ===== */
+#result {
+  margin-top: 30px;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+  color: #283593;
+  background: #e3f2fd;
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px dashed #64b5f6;
+}

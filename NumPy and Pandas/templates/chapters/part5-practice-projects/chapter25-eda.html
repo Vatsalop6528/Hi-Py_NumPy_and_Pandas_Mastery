@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Lato:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style/main.css">
+    <meta charset="UTF-8">
+    <title>📘 Chapter 25: Exploratory Data Analysis (EDA)</title>
+</head>
+<body>
+
+{% include 'components/header.html' %}
+
+
+<div class="container">
+      <h1>📘 Chapter 25: Exploratory Data Analysis (EDA)</h1>
+    </div>
+<main class="chapter-content container">
+
+
+
+  <div class="note">
+    <h2>🧠 Concept Overview</h2>
+    <p>
+      Exploratory Data Analysis (EDA) is the process of investigating datasets to discover patterns, spot anomalies, test hypotheses, and check assumptions with the help of summary statistics and visualizations. It's the first step in any data science or machine learning workflow.
+    </p>
+    <p>
+      Core concepts include:
+    </p>
+    <ul>
+      <li>Descriptive statistics</li>
+      <li>Missing value handling</li>
+      <li>Distribution and outlier detection</li>
+      <li>Group analysis and correlation</li>
+      <li>Data visualization techniques</li>
+    </ul>
+  </div>
+
+  <div class="code">
+    <h2>🧪 Code Exercises</h2>
+    <pre><code>
+# 1. Load a dataset
+df = pd.read_csv('data.csv')
+
+# 2. View top and bottom rows
+df.head(), df.tail()
+
+# 3. Summary statistics
+df.describe()
+
+# 4. Count missing values
+df.isnull().sum()
+
+# 5. Data types of each column
+df.dtypes
+
+# 6. Unique values in a column
+df['gender'].unique()
+
+# 7. Frequency counts
+df['gender'].value_counts()
+
+# 8. Mean, median, mode of a column
+df['income'].mean(), df['income'].median(), df['income'].mode()
+
+# 9. Correlation matrix
+df.corr()
+
+# 10. Grouped statistics
+df.groupby('department')['salary'].mean()
+
+# 11. Detect outliers using IQR
+Q1 = df['age'].quantile(0.25)
+Q3 = df['age'].quantile(0.75)
+IQR = Q3 - Q1
+df_outliers = df[(df['age'] < Q1 - 1.5*IQR) | (df['age'] > Q3 + 1.5*IQR)]
+
+# 12. Fill missing values
+df['income'].fillna(df['income'].mean(), inplace=True)
+
+# 13. Drop duplicate rows
+df.drop_duplicates(inplace=True)
+
+# 14. Visualize distribution
+import matplotlib.pyplot as plt
+df['age'].hist()
+plt.show()
+    </code></pre>
+  </div>
+
+  <div class="challenge">
+    <h2>💡 Challenges (Easy → Hard)</h2>
+    <ul>
+      <li><strong>🟢 Easy:</strong> How many missing values are there in each column?</li>
+      <li><strong>🟡 Medium:</strong> Find top 3 departments by average employee performance.</li>
+      <li><strong>🟠 Hard:</strong> Create a correlation heatmap to find which features are highly related.</li>
+      <li><strong>🔴 Expert:</strong> Write a reusable function that returns a complete EDA summary (missing %, data types, basic stats, unique counts).</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <h2>📘 Diagram Placeholder</h2>
+    <p>
+      <img src="/static/assets/images/placeholder_eda_diagram.png" style="height: 800px;width: 1500px" alt="EDA Workflow Diagram Placeholder" />
+    </p>
+  </div>
+
+  <div class="test">
+    <h2>🧭 Mini Project: EDA on a Real Dataset</h2>
+    <p><strong>Dataset:</strong> Use <code>housing_data.csv</code> that includes price, location, bedrooms, bathrooms, size, and age of houses.</p>
+
+    <ol>
+      <li>Load and preview the dataset</li>
+      <li>Handle missing values appropriately</li>
+      <li>Find average house price per location</li>
+      <li>Detect and remove outliers in price and size</li>
+      <li>Check correlation between features</li>
+      <li>Visualize price distribution and price vs. size</li>
+    </ol>
+
+    <pre><code>
+# 1. Load data
+df = pd.read_csv('housing_data.csv')
+
+# 2. Handle missing values
+df.fillna(df.median(), inplace=True)
+
+# 3. Group by location
+df.groupby('location')['price'].mean().sort_values(ascending=False)
+
+# 4. Remove outliers in 'price' and 'size'
+for col in ['price', 'size']:
+    Q1 = df[col].quantile(0.25)
+    Q3 = df[col].quantile(0.75)
+    IQR = Q3 - Q1
+    df = df[(df[col] >= Q1 - 1.5*IQR) & (df[col] <= Q3 + 1.5*IQR)]
+
+# 5. Correlation matrix
+print(df.corr())
+
+# 6. Visualizations
+import seaborn as sns
+sns.histplot(df['price'])
+sns.scatterplot(x='size', y='price', data=df)
+    </code></pre>
+
+    <p>🎯 <strong>Goal:</strong> Create a 1-page summary report with visualizations and insights about price trends, location effects, and size-price relationships.</p>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>© 2025 Hi-Py. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
